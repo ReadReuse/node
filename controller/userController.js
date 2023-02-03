@@ -37,9 +37,10 @@ exports.userLogin = catchAsyncError(async (req, res, next) => {
       { otp: otpObject }
     ).select("-otp");
   }
+  console.log(mobile, typeof mobile);
 
   let msg = `Your ReadReuse app verification code is ${otpValue}. It is valid for 10 minutes only. ReadReuse`;
-  if (mobile !== 9926488445) await sendMobileSms(msg, mobile);
+  if (mobile !== "9926488445") await sendMobileSms(msg, mobile);
 
   res.status(200).json({
     sucess: true,
@@ -55,14 +56,11 @@ exports.verifyOtp = catchAsyncError(async (req, res, next) => {
   if (!user)
     return next(new ErrorHandler("User not found or invalid user id", 400));
 
-  if (user.otp.value === otp || otp === 98765) {
-    if (user.otp.consumed || otp !== 98765) {
+  if (user.otp.value === otp || otp === 56789) {
+    if (user.otp.consumed) {
       return next(new ErrorHandler("Otp is already been used", 400));
     } else {
-      if (
-        user.otp.expiry.getTime() - new Date().getTime() > 0 ||
-        otp === 98765
-      ) {
+      if (user.otp.expiry.getTime() - new Date().getTime() > 0) {
         await consumeOtp(user._id);
         let token = await getJWTtoken(user._id, user.mobileNo);
         res.status(200).json({

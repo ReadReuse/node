@@ -22,7 +22,11 @@ const userSchema = new mongoose.Schema(
     collegeName: {
       type: String,
     },
-    location: {
+    addressLocation: {
+      lantitude: Number,
+      longitude: Number,
+    },
+    currentLocation: {
       lantitude: Number,
       longitude: Number,
     },

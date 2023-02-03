@@ -123,3 +123,26 @@ exports.blockUser = catchAsyncError(async (req, res, next) => {
     user,
   });
 });
+
+exports.updateCurrentLocation = catchAsyncError(async (req, res, next) => {
+  let user = await User.findOne({ _id: req.params.userId });
+
+  if (!user) return next(new ErrorHandler("User not exist", 400));
+
+  user = await User.findByIdAndUpdate(
+    req.params.userId,
+    {
+      currentLocation: {
+        lantitude: req.body.lantitude,
+        longitude: req.body.longitude,
+      },
+    },
+    { new: true }
+  ).select("-otp");
+
+  res.status(200).json({
+    status: true,
+    message: "User Location updated successfully.",
+    user,
+  });
+});

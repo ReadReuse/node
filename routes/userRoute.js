@@ -10,6 +10,7 @@ const {
   verifyOtp,
   registerUserDetails,
   blockUser,
+  updateCurrentLocation,
 } = require("../controller/userController");
 const { validate } = require("../middleware/validation");
 
@@ -21,5 +22,7 @@ userRoutes.post(
   registerUserDetails
 );
 userRoutes.post("/blockUser/:userId", blockUser);
+
+userRoutes.post("/updateCurrentLocation/:userId", updateCurrentLocation);
 
 module.exports = userRoutes;

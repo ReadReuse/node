@@ -29,7 +29,7 @@ module.exports = (err, req, res, next) => {
     err = new Error(message, 400);
   }
 
-  console.log("Testing Error", err);
+  // console.log("Testing Error", err);
   res.status(err.statusCode).json({
     success: false,
     message: err.message,

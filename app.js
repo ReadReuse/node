@@ -9,6 +9,7 @@ const ErrorConstants = require("./constant/errorConstants");
 const ErrorHandler = require("./utils/errorHandler");
 const ErrorMiddleware = require("./middleware/error");
 const app = express();
+const fs = require("fs");
 //added cors policy
 app.use(cors());
 //added morgan for logging api hits
@@ -18,7 +19,13 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+//checking for a upload folder
+if (!fs.existsSync("./uploads")) {
+  fs.mkdirSync("./uploads");
+}
+
 app.use("/api/v1/", router);
+app.use("/uploads", express.static("uploads"));
 
 app.use(function (req, res, next) {
   return next(new ErrorHandler(ErrorConstants.API_ENDPOINT_NOT_FOUND, 404));

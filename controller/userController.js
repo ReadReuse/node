@@ -7,12 +7,15 @@ const {
 } = require("../utils/userUtils");
 const User = require("../schema/userSchema");
 const { getJWTtoken } = require("../utils/jwt");
+const statusCode = require("../constant/statusCode");
 
 exports.userLogin = catchAsyncError(async (req, res, next) => {
   const { mobile } = req.body;
   let user;
   if (!mobile)
-    return next(new ErrorHandler("Mobile Number are required.", 400));
+    return next(
+      new ErrorHandler("Mobile Number are required.", statusCode.BAD_REQUEST)
+    );
 
   const otpValue = generateOtp();
 
@@ -54,11 +57,18 @@ exports.verifyOtp = catchAsyncError(async (req, res, next) => {
   const user = await User.findById(userId).lean();
 
   if (!user)
-    return next(new ErrorHandler("User not found or invalid user id", 400));
+    return next(
+      new ErrorHandler(
+        "User not found or invalid user id",
+        statusCode.BAD_REQUEST
+      )
+    );
 
   if (user.otp.value === otp || otp === 56789) {
     if (user.otp.consumed) {
-      return next(new ErrorHandler("Otp is already been used", 400));
+      return next(
+        new ErrorHandler("Otp is already been used", statusCode.BAD_REQUEST)
+      );
     } else {
       if (user.otp.expiry.getTime() - new Date().getTime() > 0) {
         await consumeOtp(user._id);
@@ -69,20 +79,25 @@ exports.verifyOtp = catchAsyncError(async (req, res, next) => {
           token,
         });
       } else {
-        return next(new ErrorHandler("Otp is Expired..", 400));
+        return next(
+          new ErrorHandler("Otp is Expired..", statusCode.BAD_REQUEST)
+        );
       }
     }
   } else {
-    return next(new ErrorHandler("Invalid Otp.", 400));
+    return next(new ErrorHandler("Invalid Otp.", statusCode.BAD_REQUEST));
   }
 });
 
 exports.registerUserDetails = catchAsyncError(async (req, res, next) => {
   const userId = req.params.userId;
   let user = await User.findById(userId);
-  if (!user) return next(new ErrorHandler("User not exist.", 400));
+  if (!user)
+    return next(new ErrorHandler("User not exist.", statusCode.BAD_REQUEST));
   if (!user.otp.consumed)
-    return next(new ErrorHandler("Otp is not verified", 400));
+    return next(
+      new ErrorHandler("Otp is not verified", statusCode.BAD_REQUEST)
+    );
 
   let updatedUser = await User.findByIdAndUpdate(
     userId,
@@ -105,7 +120,8 @@ exports.registerUserDetails = catchAsyncError(async (req, res, next) => {
 exports.blockUser = catchAsyncError(async (req, res, next) => {
   let user = await User.findOne({ _id: req.params.userId });
 
-  if (!user) return next(new ErrorHandler("User not exist", 400));
+  if (!user)
+    return next(new ErrorHandler("User not exist", statusCode.BAD_REQUEST));
 
   user = await User.findByIdAndUpdate(
     req.params.userId,
@@ -125,7 +141,8 @@ exports.blockUser = catchAsyncError(async (req, res, next) => {
 exports.updateCurrentLocation = catchAsyncError(async (req, res, next) => {
   let user = await User.findOne({ _id: req.params.userId });
 
-  if (!user) return next(new ErrorHandler("User not exist", 400));
+  if (!user)
+    return next(new ErrorHandler("User not exist", statusCode.BAD_REQUEST));
 
   user = await User.findByIdAndUpdate(
     req.params.userId,

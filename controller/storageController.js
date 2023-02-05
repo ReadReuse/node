@@ -6,9 +6,11 @@ const {
 } = require("../utils/cloudinary");
 const ErrorHandler = require("../utils/errorHandler");
 const path = require("path");
+const statusCode = require("../constant/statusCode");
 
 exports.uploadAssets = catchAsyncError(async (req, res, next) => {
-  if (!req.file) return new ErrorHandler("Please add file.", 400);
+  if (!req.file)
+    return new ErrorHandler("Please add file.", statusCode.BAD_REQUEST);
 
   const localFilePath = req.file.path;
   const fileName = req.file.filename;
@@ -32,7 +34,10 @@ exports.deleteAssets = catchAsyncError(async (req, res, next) => {
   console.log(!req.query.original_filename && !req.query.folder);
   if (!req.query.original_filename && !req.query.folder)
     return next(
-      new ErrorHandler("Please add original_filename and folder in query.", 400)
+      new ErrorHandler(
+        "Please add original_filename and folder in query.",
+        statusCode.BAD_REQUEST
+      )
     );
 
   const publicId = req.query.folder + "/" + req.query.original_filename;

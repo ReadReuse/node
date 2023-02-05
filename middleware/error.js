@@ -30,9 +30,9 @@ module.exports = (err, req, res, next) => {
   }
 
   // console.log("Testing Error", err);
-  res.status(err.statusCode).json({
+  res.status(err.statusCode || 500).json({
     success: false,
-    message: err.message,
+    message: err.message || err,
     stack_trace: err.stack,
   });
 };

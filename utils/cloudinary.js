@@ -1,5 +1,7 @@
 const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
+const dotenv = require("dotenv");
+dotenv.config({ path: "config/.env" });
 
 // Configuration
 cloudinary.config({
@@ -12,7 +14,11 @@ const uploadToCloudinary = async (localFilePath, fileName) => {
   let mainFolderName = "readreuse";
 
   return cloudinary.uploader
-    .upload(localFilePath, { public_id: fileName, folder: mainFolderName })
+    .upload(localFilePath, {
+      public_id: fileName,
+      folder: mainFolderName,
+      overwrite: false,
+    })
     .then((result) => {
       fs.unlinkSync(localFilePath);
 
@@ -30,4 +36,45 @@ const uploadToCloudinary = async (localFilePath, fileName) => {
     });
 };
 
-module.exports = uploadToCloudinary;
+const deleteFromCloudinary = async (public_id) => {
+  return cloudinary.uploader
+    .destroy(public_id)
+    .then((result) => {
+      return {
+        success: true,
+        result: result,
+      };
+    })
+    .catch((err) => {
+      return {
+        success: false,
+        err,
+      };
+    });
+};
+
+const checkCloudinaryAsset = async (fileName, folderName) => {
+  const public_id = (folderName || "readreuse") + "/" + fileName;
+
+  return cloudinary.api
+    .resource(public_id)
+    .then((result) => {
+      console.log(result);
+      return {
+        success: true,
+        result: result,
+      };
+    })
+    .catch((err) => {
+      return {
+        success: false,
+        err,
+      };
+    });
+};
+
+module.exports = {
+  uploadToCloudinary,
+  deleteFromCloudinary,
+  checkCloudinaryAsset,
+};

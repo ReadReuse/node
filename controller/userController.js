@@ -116,7 +116,7 @@ exports.blockUser = catchAsyncError(async (req, res, next) => {
   ).select("-otp");
 
   res.status(200).json({
-    status: true,
+    success: true,
     message: "User blocked successfully.",
     user,
   });
@@ -139,7 +139,7 @@ exports.updateCurrentLocation = catchAsyncError(async (req, res, next) => {
   ).select("-otp");
 
   res.status(200).json({
-    status: true,
+    success: true,
     message: "User Location updated successfully.",
     user,
   });

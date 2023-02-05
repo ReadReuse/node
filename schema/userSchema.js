@@ -1,3 +1,4 @@
+const { string } = require("joi");
 const mongoose = require("mongoose");
 const { isEmail } = require("validator");
 
@@ -51,7 +52,13 @@ const userSchema = new mongoose.Schema(
       minlength: [10, "Should not be less than 10 number."],
     },
     avatar: {
-      type: String,
+      format: String,
+      original_filename: String,
+      folder: {
+        type: String,
+        default: "readreuse",
+      },
+      location: String,
     },
     createdAt: {
       type: Date,

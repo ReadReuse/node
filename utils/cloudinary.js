@@ -3,16 +3,16 @@ const fs = require("fs");
 
 // Configuration
 cloudinary.config({
-  cloud_name: "dwv7fnwns",
-  api_key: "838723546365578",
-  api_secret: "BnxOHb9QsbKdhWcoPCHrFS5lwt8",
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const uploadToCloudinary = async (localFilePath) => {
+const uploadToCloudinary = async (localFilePath, fileName) => {
   let mainFolderName = "readreuse";
 
   return cloudinary.uploader
-    .upload(localFilePath, { public_id: mainFolderName + "/" + localFilePath })
+    .upload(localFilePath, { public_id: fileName, folder: mainFolderName })
     .then((result) => {
       fs.unlinkSync(localFilePath);
 

@@ -4,20 +4,6 @@ const User = require("../schema/userSchema");
 const catchAsyncError = require("./catchAsyncError");
 const jwt = require("jsonwebtoken");
 
-exports.authorizeRole = (...roles) => {
-  return (req, res, next) => {
-    if (!roles.includes(req.user.role)) {
-      return next(
-        new ErrorHandler(
-          `Role: ${req.user.role} is not allowed to access this resource.`,
-          statusCode.UNAUTHORIZED
-        )
-      );
-    }
-    next();
-  };
-};
-
 exports.isAuthenticatedUser = catchAsyncError(async (req, res, next) => {
   const token = req.headers?.authorization?.split(" ")[1];
 
@@ -31,8 +17,21 @@ exports.isAuthenticatedUser = catchAsyncError(async (req, res, next) => {
   }
 
   const decodeData = jwt.verify(token, process.env.JWT_SECRET);
-
-  req.user = await User.findById(decodeData.id);
+  req.user = await User.findById(decodeData._id);
 
   next();
 });
+
+exports.authorizeRole = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new ErrorHandler(
+          `Role: ${req.user.role} is not allowed to access this resource.`,
+          statusCode.UNAUTHORIZED
+        )
+      );
+    }
+    next();
+  };
+};

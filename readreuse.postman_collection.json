@@ -1,0 +1,231 @@
+{
+	"info": {
+		"_postman_id": "a2e2d091-651a-45e9-aded-ab19f9430e00",
+		"name": "readreuse",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18852378"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mobile\": \"9926488445\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verifyOtp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"otp\": 56789,\r\n    \"userId\": \"63cf9b570b4215d4192176df\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user/verifyOtp",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"verifyOtp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "registerUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Rehan152\",\r\n    \"email\": \"test12@test.com\",\r\n    \"dob\": \"2001-10-24\",\r\n    \"address\": \"Pithampur\",\r\n    \"collegeName\": \"SVCE\",\r\n    \"enrollmentNo\": \"0822Cs201060\",\r\n    \"graduationYear\": \"3\",\r\n    \"graduationSemester\": \"6\",\r\n    \"course\": \"B Tech\",\r\n    \"branch\": \"CS\",\r\n    \"city\": \"indore\",\r\n    \"state\": \"mp\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user/registerUser/:userId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"registerUser",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "63cf9b570b4215d4192176df"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "blockUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/user/blockUser/:userId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"blockUser",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "63cf9b570b4215d4192176df"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "storage",
+			"item": [
+				{
+					"name": "upload assests",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/ASUS/Downloads/Fitz - Gym Buddies.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/storage/upload/assets",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"storage",
+								"upload",
+								"assets"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete assests",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/storage/delete/assets?folder=readreuse&original_filename=1675598501656-icon2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"storage",
+								"delete",
+								"assets"
+							],
+							"query": [
+								{
+									"key": "folder",
+									"value": "readreuse"
+								},
+								{
+									"key": "original_filename",
+									"value": "1675598501656-icon2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "feed",
+			"item": [
+				{
+					"name": "create feed",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/feed/create",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"feed",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

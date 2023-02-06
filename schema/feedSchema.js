@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const productSchema = mongoose.Schema(
+const feedSchema = mongoose.Schema(
   {
     title: {
       type: String,
@@ -29,7 +29,7 @@ const productSchema = mongoose.Schema(
     },
     verified: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     avatar: [
       {
@@ -47,6 +47,10 @@ const productSchema = mongoose.Schema(
       type: Date,
       default: Date.now(),
     },
+    featured: {
+      type: Boolean,
+      default: false,
+    },
     user: {
       type: mongoose.Schema.ObjectId,
       ref: "User",
@@ -56,4 +60,4 @@ const productSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Product", productSchema);
+module.exports = mongoose.model("Feed", feedSchema);

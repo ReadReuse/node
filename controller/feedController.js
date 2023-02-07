@@ -1,7 +1,9 @@
+const { json } = require("body-parser");
 const statusCode = require("../constant/statusCode");
 const catchAsyncError = require("../middleware/catchAsyncError");
 const Feed = require("../schema/feedSchema");
 const ErrorHandler = require("../utils/errorHandler");
+const { distance } = require("../utils/location");
 
 exports.createFeedController = catchAsyncError(async (req, res, next) => {
   const feed = await Feed.create({ ...req.body });
@@ -14,14 +16,49 @@ exports.createFeedController = catchAsyncError(async (req, res, next) => {
 });
 
 exports.listAllFeed = catchAsyncError(async (req, res, next) => {
-  const feed = await Feed.where({ blocked: false }).populate(
+  const feed = await Feed.find({ blocked: false }).populate(
     "user",
     "name avatar"
   );
 
+  let tempData = [];
+
+  for (var i = 0; i < feed.length; i++) {
+    if (
+      distance(
+        req.user.currentLocation.lantitude,
+        req.user.currentLocation.longitude,
+        feed[i].locationCoords.lantitude,
+        feed[i].locationCoords.longitude,
+        "K"
+      ) <= 100
+    ) {
+      tempData.push({
+        ...feed[i]._doc,
+        distance: distance(
+          req.user.currentLocation.lantitude,
+          req.user.currentLocation.longitude,
+          feed[i].locationCoords.lantitude,
+          feed[i].locationCoords.longitude,
+          "K"
+        ),
+      });
+    }
+  }
+
+  const sortedFilterData = tempData.sort((a, b) => a.distance - b.distance);
+
+  if (!(sortedFilterData.length > 0))
+    return next(
+      new ErrorHandler(
+        "No feed found in your location.",
+        statusCode.BAD_REQUEST
+      )
+    );
+
   res.status(statusCode.SUCCESS).json({
     success: true,
-    feed,
+    feed: sortedFilterData,
   });
 });
 
@@ -89,23 +126,6 @@ exports.getUnverifiedFeedList = catchAsyncError(async (req, res, next) => {
     feed,
   });
 });
-
-// function distance(lat1, lon1, lat2, lon2, unit) {
-//   var radlat1 = Math.PI * lat1/180
-//   var radlat2 = Math.PI * lat2/180
-//   var theta = lon1-lon2
-//   var radtheta = Math.PI * theta/180
-//   var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-//   if (dist > 1) {
-//     dist = 1;
-//   }
-//   dist = Math.acos(dist)
-//   dist = dist * 180/Math.PI
-//   dist = dist * 60 * 1.1515
-//   if (unit=="K") { dist = dist * 1.609344 }
-//   if (unit=="N") { dist = dist * 0.8684 }
-//   return dist
-// }
 
 // var data = [{
 //     "code": "0001",

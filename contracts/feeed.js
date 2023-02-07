@@ -18,6 +18,10 @@ exports.createFeedContract = Joi.object({
       })
     )
     .required(),
+  locationCoords: Joi.object({
+    lantitude: Joi.number().required(),
+    longitude: Joi.number().required(),
+  }).required(),
   tags: Joi.array().items(Joi.string()),
   user: Joi.string().max(24).required(),
 });

@@ -210,8 +210,27 @@
 				{
 					"name": "create feed",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"some example title 2\",\r\n    \"price\": 150,\r\n    \"description\": \"some description\",\r\n    \"moreDetails\": [\"aa\", \"bb\"],\r\n    \"city\": \"Pithampur\",\r\n    \"locality\": \"some locality\",\r\n    \"state\": \"mpf\",\r\n    \"avatar\": [\r\n        {\r\n            \"format\": \"png\",\r\n            \"original_filename\": \"1675616641170-Fitz - Gym Buddies\",\r\n            \"folder\": \"readreuse\",\r\n            \"location\": \"https://res.cloudinary.com/dwv7fnwns/image/upload/v1675616644/readreuse/1675616641170-Fitz%20-%20Gym%20Buddies.png\"\r\n        }\r\n    ],\r\n    \"tags\": [\"aa\", \"bb\", \"cc\"],\r\n    \"user\": \"63e0922829728961667f57c8\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{base_url}}/feed/create",
 							"host": [
@@ -220,6 +239,120 @@
 							"path": [
 								"feed",
 								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all unblocked feed",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/feed/getFeeds",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"feed",
+								"getFeeds"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "blocked feed (admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/feed/blocked/63e095e6f7b6b961470919f1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"feed",
+								"blocked",
+								"63e095e6f7b6b961470919f1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get unverified feed (admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/feed/unVerifiedFeed",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"feed",
+								"unVerifiedFeed"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verified feed admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/feed/verify/63e095e6f7b6b961470919f1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"feed",
+								"verify",
+								"63e095e6f7b6b961470919f1"
 							]
 						}
 					},

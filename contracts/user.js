@@ -37,4 +37,12 @@ exports.userRegisterContract = Joi.object({
   city: Joi.string().required(),
   locality: Joi.string().optional(),
   state: Joi.string().required(),
+  addressLocation: Joi.object({
+    lantitude: Joi.number().required(),
+    longitude: Joi.number().required(),
+  }).required(),
+  currentLocation: Joi.object({
+    lantitude: Joi.number().required(),
+    longitude: Joi.number().required(),
+  }).required(),
 });

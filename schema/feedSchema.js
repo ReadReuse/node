@@ -42,6 +42,10 @@ const feedSchema = mongoose.Schema(
         location: String,
       },
     ],
+    locationCoords: {
+      lantitude: Number,
+      longitude: Number,
+    },
     tags: [String],
     createdAt: {
       type: Date,

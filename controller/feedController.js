@@ -5,6 +5,7 @@ const Feed = require("../schema/feedSchema");
 const ErrorHandler = require("../utils/errorHandler");
 const { distance } = require("../utils/location");
 
+// create feed controller
 exports.createFeedController = catchAsyncError(async (req, res, next) => {
   const feed = await Feed.create({ ...req.body });
 
@@ -15,8 +16,34 @@ exports.createFeedController = catchAsyncError(async (req, res, next) => {
   });
 });
 
+//edit feed controller
+exports.editFeedController = catchAsyncError(async (req, res, next) => {
+  let feed;
+
+  feed = await Feed.find({ _id: req.params.feedId, user: req.user._id });
+
+  if (!feed.length > 0)
+    return next(new ErrorHandler("Feed not found", statusCode.NOT_FOUND));
+
+  feed = await Feed.findOneAndUpdate(
+    { user: req.user._id, _id: req.params.feedId },
+    { ...req.body },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  res.status(statusCode.SUCCESS).json({
+    success: true,
+    message: "Feed updated successfully.",
+    feed,
+  });
+});
+
+// list all feed based on nearest location
 exports.listAllFeed = catchAsyncError(async (req, res, next) => {
-  const feed = await Feed.find({ blocked: false }).populate(
+  const feed = await Feed.find({ blocked: false, soldOut: false }).populate(
     "user",
     "name avatar"
   );
@@ -62,13 +89,9 @@ exports.listAllFeed = catchAsyncError(async (req, res, next) => {
   });
 });
 
+// blocked feed admin access
 exports.blockedFeed = catchAsyncError(async (req, res, next) => {
   const feedId = req.params.feedId;
-
-  if (!feedId)
-    return next(
-      new ErrorHandler("Please add feed id in params", statusCode.BAD_REQUEST)
-    );
 
   const checkFeed = await Feed.findById(feedId);
 
@@ -90,13 +113,9 @@ exports.blockedFeed = catchAsyncError(async (req, res, next) => {
   });
 });
 
+// verify feed admin access
 exports.verifyFeed = catchAsyncError(async (req, res, next) => {
   const feedId = req.params.feedId;
-
-  if (!feedId)
-    return next(
-      new ErrorHandler("Please add feed id in params", statusCode.BAD_REQUEST)
-    );
 
   const checkFeed = await Feed.findById(feedId);
 
@@ -118,6 +137,7 @@ exports.verifyFeed = catchAsyncError(async (req, res, next) => {
   });
 });
 
+// get all unverified list (admin access)
 exports.getUnverifiedFeedList = catchAsyncError(async (req, res, next) => {
   const feed = await Feed.where({ verified: false });
 
@@ -127,32 +147,49 @@ exports.getUnverifiedFeedList = catchAsyncError(async (req, res, next) => {
   });
 });
 
-// var data = [{
-//     "code": "0001",
-//     "lat": "1.28210155945393",
-//     "lng": "103.81722480263163",
-//     "location": "Stop 1"
-// }, {
-//     "code": "0003",
-//     "lat": "1.2777380589964",
-//     "lng": "103.83749709165197",
-//     "location": "Stop 2"
-// }, {
-//     "code": "0002",
-//     "lat": "1.27832046633393",
-//     "lng": "103.83762574759974",
-//     "location": "Stop 3"
-// }];
+// get all user created feed
+exports.getAllUserCreatedFeed = catchAsyncError(async (req, res, next) => {
+  const userFeed = await Feed.find({ user: req.user._id });
 
-// var html = "";
-// var poslat = 1.28210155945393;
-// var poslng = 103.81722480263163;
+  if (!userFeed.length > 0)
+    return next(
+      new ErrorHandler("You haven't created any feed.", statusCode.BAD_REQUEST)
+    );
 
-// for (var i = 0; i < data.length; i++) {
-//     // if this location is within 0.1KM of the user, add it to the list
-//     if (distance(poslat, poslng, data[i].lat, data[i].lng, "K") <= 0.1) {
-//         html += '<p>' + data[i].location + ' - ' + data[i].code + '</p>';
-//     }
-// }
+  res.status(statusCode.SUCCESS).json({
+    success: true,
+    feed: userFeed,
+  });
+});
 
-// $('#nearbystops').append(html);
+// delete feed by user
+exports.deleteFeedByUser = catchAsyncError(async (req, res, next) => {
+  const userFeed = await Feed.deleteOne({
+    user: req.user._id,
+    _id: req.params.feedId,
+  });
+
+  if (!userFeed.deletedCount > 0) {
+    return next(new ErrorHandler("Feed not found.", statusCode.BAD_REQUEST));
+  }
+
+  res.status(statusCode.SUCCESS).json({
+    success: true,
+    message: "Feed Deleted Successfully.",
+    feed: userFeed,
+  });
+});
+
+// delete feed by admin
+exports.deleteFeedByAdmin = catchAsyncError(async (req, res, next) => {
+  const deletedFeed = await Feed.findByIdAndDelete(req.params.feedId);
+
+  if (deletedFeed == null)
+    return next(new ErrorHandler("Feed not found.", statusCode.NOT_FOUND));
+
+  res.status(statusCode.SUCCESS).json({
+    success: true,
+    message: "Feed Deleted Successfully.",
+    feed: deletedFeed,
+  });
+});

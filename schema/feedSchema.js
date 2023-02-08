@@ -60,6 +60,10 @@ const feedSchema = mongoose.Schema(
       ref: "User",
       required: true,
     },
+    soldOut: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

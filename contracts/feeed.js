@@ -25,3 +25,26 @@ exports.createFeedContract = Joi.object({
   tags: Joi.array().items(Joi.string()),
   user: Joi.string().max(24).required(),
 });
+
+exports.updateFeedContract = Joi.object({
+  title: Joi.string(),
+  price: Joi.number(),
+  description: Joi.string(),
+  moreDetails: Joi.array().items(Joi.string()),
+  city: Joi.string(),
+  locality: Joi.string(),
+  state: Joi.string(),
+  avatar: Joi.array().items(
+    Joi.object({
+      format: Joi.string(),
+      original_filename: Joi.string(),
+      folder: Joi.string(),
+      location: Joi.string(),
+    })
+  ),
+  locationCoords: Joi.object({
+    lantitude: Joi.number(),
+    longitude: Joi.number(),
+  }),
+  tags: Joi.array().items(Joi.string()),
+});

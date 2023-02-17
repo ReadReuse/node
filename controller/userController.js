@@ -45,7 +45,7 @@ exports.userLogin = catchAsyncError(async (req, res, next) => {
   let msg = `Your ReadReuse app verification code is ${otpValue}. It is valid for 10 minutes only. ReadReuse`;
   if (mobile !== "9926488445") await sendMobileSms(msg, mobile);
 
-  res.status(200).json({
+  res.status(statusCode.SUCCESS).json({
     sucess: true,
     user,
   });
@@ -73,7 +73,7 @@ exports.verifyOtp = catchAsyncError(async (req, res, next) => {
       if (user.otp.expiry.getTime() - new Date().getTime() > 0) {
         await consumeOtp(user._id);
         let token = await getJWTtoken(user._id, user.mobileNo);
-        res.status(200).json({
+        res.status(statusCode.SUCCESS).json({
           success: true,
           message: "otp verified",
           token,
@@ -131,7 +131,7 @@ exports.blockUser = catchAsyncError(async (req, res, next) => {
     { new: true }
   ).select("-otp");
 
-  res.status(200).json({
+  res.status(statusCode.SUCCESS).json({
     success: true,
     message: "User blocked successfully.",
     user,
@@ -155,7 +155,7 @@ exports.updateCurrentLocation = catchAsyncError(async (req, res, next) => {
     { new: true }
   ).select("-otp");
 
-  res.status(200).json({
+  res.status(statusCode.SUCCESS).json({
     success: true,
     message: "User Location updated successfully.",
     user,

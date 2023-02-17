@@ -1,9 +1,8 @@
 {
 	"info": {
-		"_postman_id": "a2e2d091-651a-45e9-aded-ab19f9430e00",
+		"_postman_id": "b4b4ded1-3f2a-42e1-9279-4f7782b7096f",
 		"name": "readreuse",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "18852378"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -70,7 +69,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Rehan152\",\r\n    \"email\": \"test12@test.com\",\r\n    \"dob\": \"2001-10-24\",\r\n    \"address\": \"Pithampur\",\r\n    \"collegeName\": \"SVCE\",\r\n    \"enrollmentNo\": \"0822Cs201060\",\r\n    \"graduationYear\": \"3\",\r\n    \"graduationSemester\": \"6\",\r\n    \"course\": \"B Tech\",\r\n    \"branch\": \"CS\",\r\n    \"city\": \"indore\",\r\n    \"state\": \"mp\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Rehan152\",\r\n    \"email\": \"test12@test.com\",\r\n    \"dob\": \"2001-10-24\",\r\n    \"address\": \"Pithampur\",\r\n    \"collegeName\": \"SVCE\",\r\n    \"enrollmentNo\": \"0822Cs201060\",\r\n    \"graduationYear\": \"3\",\r\n    \"graduationSemester\": \"6\",\r\n    \"course\": \"B Tech\",\r\n    \"branch\": \"CS\",\r\n    \"city\": \"indore\",\r\n    \"state\": \"mp\",\r\n    \"addressLocation\": {\r\n      \"lantitude\": 22.611365,\r\n      \"longitude\": 75.680277\r\n    },\r\n    \"currentLocation\": {\r\n      \"lantitude\": 22.611365,\r\n      \"longitude\": 75.680277\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -90,7 +89,7 @@
 							"variable": [
 								{
 									"key": "userId",
-									"value": "63cf9b570b4215d4192176df"
+									"value": "63e0922829728961667f57c8"
 								}
 							]
 						}
@@ -148,7 +147,7 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "/C:/Users/ASUS/Downloads/Fitz - Gym Buddies.png"
+									"src": "/C:/Users/ASUS/Downloads/Screenshot 2023-02-12 124504.png"
 								}
 							]
 						},
@@ -224,7 +223,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"some example title 2\",\r\n    \"price\": 150,\r\n    \"description\": \"some description\",\r\n    \"moreDetails\": [\"aa\", \"bb\"],\r\n    \"city\": \"Pithampur\",\r\n    \"locality\": \"some locality\",\r\n    \"state\": \"mpf\",\r\n    \"avatar\": [\r\n        {\r\n            \"format\": \"png\",\r\n            \"original_filename\": \"1675616641170-Fitz - Gym Buddies\",\r\n            \"folder\": \"readreuse\",\r\n            \"location\": \"https://res.cloudinary.com/dwv7fnwns/image/upload/v1675616644/readreuse/1675616641170-Fitz%20-%20Gym%20Buddies.png\"\r\n        }\r\n    ],\r\n    \"tags\": [\"aa\", \"bb\", \"cc\"],\r\n    \"user\": \"63e0922829728961667f57c8\"\r\n}",
+							"raw": "{\r\n    \"title\": \"delete2\",\r\n    \"price\": 100,\r\n    \"description\": \"some description 5\",\r\n    \"moreDetails\": [\r\n        {\r\n            \"title\": \"key1\", \r\n            \"description\": \"value1\"\r\n        }, \r\n        {\r\n            \"title\": \"key2\",\r\n            \"description\": \"value2\"\r\n        }\r\n    ],\r\n    \"city\": \"Pithampur5\",\r\n    \"locality\": \"some locality\",\r\n    \"state\": \"mpf\",\r\n    \"locationCoords\": {\r\n        \"lantitude\": 22.665524,\r\n        \"longitude\": 71.670758\r\n    },\r\n    \"avatar\": [\r\n        {\r\n            \"format\": \"png\",\r\n            \"original_filename\": \"1675616641170-Fitz - Gym Buddies\",\r\n            \"folder\": \"readreuse\",\r\n            \"location\": \"https://res.cloudinary.com/dwv7fnwns/image/upload/v1675616644/readreuse/1675616641170-Fitz%20-%20Gym%20Buddies.png\"\r\n        }\r\n    ],\r\n    \"tags\": [\"aa\", \"bb\", \"cc\"]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -330,7 +329,7 @@
 					"response": []
 				},
 				{
-					"name": "verified feed admin",
+					"name": "verified feed (admin)",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -353,6 +352,469 @@
 								"feed",
 								"verify",
 								"63e095e6f7b6b961470919f1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user created feed",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/feed/userFeeds",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"feed",
+								"userFeeds"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "feed deleted by user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/feed/userFeedDelete/:feedId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"feed",
+								"userFeedDelete",
+								":feedId"
+							],
+							"variable": [
+								{
+									"key": "feedId",
+									"value": "63e31b38bc0e6db4aa84f006"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "feed delete by admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/feed/adminFeedDelete/:feedId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"feed",
+								"adminFeedDelete",
+								":feedId"
+							],
+							"variable": [
+								{
+									"key": "feedId",
+									"value": "63e32751565065a1fa390668"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit feed",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"update name\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/feed/:feedId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"feed",
+								":feedId"
+							],
+							"variable": [
+								{
+									"key": "feedId",
+									"value": "63e27ae372c2ba84d407a363"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "saved feed",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/feed/save/:feedId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"feed",
+								"save",
+								":feedId"
+							],
+							"variable": [
+								{
+									"key": "feedId",
+									"value": "63e25cbdcb6a0c81c109e9a6"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "notes",
+			"item": [
+				{
+					"name": "saved notes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"RGPV Time table\",\r\n    \"description\": \"rgpv timetable description for refrence\",\r\n    \"tags\": [\"rgpv\", \"timetable\"],\r\n    \"keyPoint\": [\"5th semster rgpv timetable\"],\r\n    \"pdfData\": {\r\n        \"format\": \"pdf\",\r\n        \"location\": \"https://res.cloudinary.com/dwv7fnwns/image/upload/v1676185949/readreuse/1676185946930-RGPV%20timetable.pdf\",\r\n        \"original_filename\": \"1676185946930-RGPV timetable\",\r\n        \"folder\": \"readreuse\"\r\n    },\r\n    \"thumbnailImages\": [{\r\n        \"format\": \"png\",\r\n    \"location\": \"https://res.cloudinary.com/dwv7fnwns/image/upload/v1676186119/readreuse/1676186117503-Screenshot%202023-02-12%20124504.png\",\r\n    \"original_filename\": \"1676186117503-Screenshot 2023-02-12 124504\",\r\n    \"folder\": \"readreuse\"\r\n    }]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/notes",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"notes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit notes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"RGPV Time table update\",\r\n    \"description\": \"rgpv timetable description for refrence\",\r\n    \"tags\": [\"rgpv\", \"timetable\"],\r\n    \"keyPoint\": [\"5th semster rgpv timetable\"],\r\n    \"pdfData\": {\r\n        \"format\": \"pdf\",\r\n        \"location\": \"https://res.cloudinary.com/dwv7fnwns/image/upload/v1676185949/readreuse/1676185946930-RGPV%20timetable.pdf\",\r\n        \"original_filename\": \"1676185946930-RGPV timetable\",\r\n        \"folder\": \"readreuse\"\r\n    },\r\n    \"thumbnailImages\": [{\r\n        \"format\": \"png\",\r\n    \"location\": \"https://res.cloudinary.com/dwv7fnwns/image/upload/v1676186119/readreuse/1676186117503-Screenshot%202023-02-12%20124504.png\",\r\n    \"original_filename\": \"1676186117503-Screenshot 2023-02-12 124504\",\r\n    \"folder\": \"readreuse\"\r\n    }]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/notes/:noteId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"notes",
+								":noteId"
+							],
+							"variable": [
+								{
+									"key": "noteId",
+									"value": "63e89c086c261f96cce3e341"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list all notes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/notes/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"notes",
+								""
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "25",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "bookmark notes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/notes/bookmark/:noteId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"notes",
+								"bookmark",
+								":noteId"
+							],
+							"variable": [
+								{
+									"key": "noteId",
+									"value": "63e89c086c261f96cce3e341"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "block notes (admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/notes/block/:noteId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"notes",
+								"block",
+								":noteId"
+							],
+							"variable": [
+								{
+									"key": "noteId",
+									"value": "63e89c086c261f96cce3e341"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verify notes (admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/notes/verify/:noteId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"notes",
+								"verify",
+								":noteId"
+							],
+							"variable": [
+								{
+									"key": "noteId",
+									"value": "63e89c086c261f96cce3e341"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "unverified notes (admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/notes/unverifiedList",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"notes",
+								"unverifiedList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete notes (admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/notes/noteDelete/:noteid",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"notes",
+								"noteDelete",
+								":noteid"
+							],
+							"variable": [
+								{
+									"key": "noteid",
+									"value": "63e89c086c261f96cce3e341"
+								}
 							]
 						}
 					},

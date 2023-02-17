@@ -2,6 +2,7 @@ const { Router } = require("express");
 const {
   createFeedContract,
   updateFeedContract,
+  searchQueryContract,
 } = require("../contracts/feeed");
 const {
   createFeedController,
@@ -13,6 +14,8 @@ const {
   deleteFeedByUser,
   deleteFeedByAdmin,
   editFeedController,
+  bookmarkFeed,
+  searchFeedController,
 } = require("../controller/feedController");
 const { isAuthenticatedUser, authorizeRole } = require("../middleware/auth");
 const { validate } = require("../middleware/validation");
@@ -35,6 +38,13 @@ feedRoutes.put(
 
 feedRoutes.get("/getFeeds", isAuthenticatedUser, listAllFeed);
 
+feedRoutes.get(
+  "/search",
+  isAuthenticatedUser,
+  validate("query", searchQueryContract),
+  searchFeedController
+);
+
 // particular user feed
 feedRoutes.get("/userFeeds", isAuthenticatedUser, getAllUserCreatedFeed);
 
@@ -43,6 +53,8 @@ feedRoutes.delete(
   isAuthenticatedUser,
   deleteFeedByUser
 );
+
+feedRoutes.get("/save/:feedId", isAuthenticatedUser, bookmarkFeed);
 
 // admin routes
 feedRoutes.get(

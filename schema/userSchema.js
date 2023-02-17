@@ -89,6 +89,18 @@ const userSchema = new mongoose.Schema(
     state: {
       type: String,
     },
+    savedNotes: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "Notes",
+      },
+    ],
+    savedFeed: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "Feed",
+      },
+    ],
   },
   { timestamps: true }
 );

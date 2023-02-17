@@ -3,10 +3,17 @@ const Joi = require("joi");
 exports.createFeedContract = Joi.object({
   title: Joi.string().required(),
   price: Joi.number().required(),
-  description: Joi.string(),
-  moreDetails: Joi.array().items(Joi.string()),
+  description: Joi.string().optional(),
+  moreDetails: Joi.array()
+    .items(
+      Joi.object({
+        title: Joi.string().required(),
+        description: Joi.string().required(),
+      })
+    )
+    .optional(),
   city: Joi.string().required(),
-  locality: Joi.string(),
+  locality: Joi.string().optional(),
   state: Joi.string().required(),
   avatar: Joi.array()
     .items(
@@ -22,8 +29,7 @@ exports.createFeedContract = Joi.object({
     lantitude: Joi.number().required(),
     longitude: Joi.number().required(),
   }).required(),
-  tags: Joi.array().items(Joi.string()),
-  user: Joi.string().max(24).required(),
+  tags: Joi.array().items(Joi.string()).optional(),
 });
 
 exports.updateFeedContract = Joi.object({
@@ -47,4 +53,8 @@ exports.updateFeedContract = Joi.object({
     longitude: Joi.number(),
   }),
   tags: Joi.array().items(Joi.string()),
+});
+
+exports.searchQueryContract = Joi.object({
+  searchString: Joi.string().required(),
 });

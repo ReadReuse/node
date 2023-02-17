@@ -19,7 +19,6 @@ exports.userRegisterContract = Joi.object({
     .email({ tlds: { allow: false } })
     .required(),
   dob: Joi.date()
-    .max("01-01-2010")
     .iso()
     .messages({ "date.format": `Date format is YYYY-MM-DD` })
     .required(),

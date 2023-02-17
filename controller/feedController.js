@@ -2,12 +2,17 @@ const { json } = require("body-parser");
 const statusCode = require("../constant/statusCode");
 const catchAsyncError = require("../middleware/catchAsyncError");
 const Feed = require("../schema/feedSchema");
+const User = require("../schema/userSchema");
 const ErrorHandler = require("../utils/errorHandler");
 const { distance } = require("../utils/location");
 
 // create feed controller
 exports.createFeedController = catchAsyncError(async (req, res, next) => {
-  const feed = await Feed.create({ ...req.body });
+  let payload = req.body;
+
+  payload = { ...payload, user: req.user._id };
+
+  const feed = await Feed.create(payload);
 
   res.status(statusCode.SUCCESS).json({
     success: true,
@@ -191,5 +196,57 @@ exports.deleteFeedByAdmin = catchAsyncError(async (req, res, next) => {
     success: true,
     message: "Feed Deleted Successfully.",
     feed: deletedFeed,
+  });
+});
+
+// saved and unsaved feed
+exports.bookmarkFeed = catchAsyncError(async (req, res, next) => {
+  const checkForSaved = await User.find({
+    _id: req.user._id,
+    savedFeed: { $elemMatch: { $eq: req.params.feedId } },
+  });
+  let isSaved;
+  let feed;
+  if (!checkForSaved.length > 0) {
+    feed = await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        $push: { savedFeed: req.params.feedId },
+      },
+      { new: true, runValidators: true }
+    );
+    isSaved = true;
+  } else {
+    feed = await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        $pull: { savedFeed: req.params.feedId },
+      },
+      { new: true, runValidators: true }
+    );
+    isSaved = false;
+  }
+
+  res.status(statusCode.SUCCESS).json({
+    success: true,
+    isSaved,
+  });
+});
+
+exports.searchFeedController = catchAsyncError(async (req, res, next) => {
+  const search = await Feed.find({
+    $or: [
+      { title: { $regex: req.query.searchString, $options: "i" } },
+      { description: { $regex: req.query.searchString, $options: "i" } },
+      { tags: { $in: [req.query.searchString] } },
+    ],
+  });
+
+  if (!search.length > 0)
+    return next(new ErrorHandler("Feed not found", statusCode.NOT_FOUND));
+
+  res.status(statusCode.SUCCESS).json({
+    success: true,
+    feed: search,
   });
 });

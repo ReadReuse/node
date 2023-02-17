@@ -532,6 +532,40 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "search api",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/feed/search?searchString=bb",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"feed",
+								"search"
+							],
+							"query": [
+								{
+									"key": "searchString",
+									"value": "bb"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -814,6 +848,40 @@
 								{
 									"key": "noteid",
 									"value": "63e89c086c261f96cce3e341"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search notes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/notes/search?searchString=a",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"notes",
+								"search"
+							],
+							"query": [
+								{
+									"key": "searchString",
+									"value": "a"
 								}
 							]
 						}

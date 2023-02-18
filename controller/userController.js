@@ -139,13 +139,13 @@ exports.blockUser = catchAsyncError(async (req, res, next) => {
 });
 
 exports.updateCurrentLocation = catchAsyncError(async (req, res, next) => {
-  let user = await User.findOne({ _id: req.params.userId });
+  let user = await User.findOne({ _id: req.user._id });
 
   if (!user)
     return next(new ErrorHandler("User not exist", statusCode.BAD_REQUEST));
 
   user = await User.findByIdAndUpdate(
-    req.params.userId,
+    req.user._id,
     {
       currentLocation: {
         lantitude: req.body.lantitude,
@@ -158,6 +158,18 @@ exports.updateCurrentLocation = catchAsyncError(async (req, res, next) => {
   res.status(statusCode.SUCCESS).json({
     success: true,
     message: "User Location updated successfully.",
+    user,
+  });
+});
+
+exports.getUserDetailFromToken = catchAsyncError(async (req, res, next) => {
+  const user = await User.findById(req.user._id).select("-otp");
+
+  if (!user)
+    return next(new ErrorHandler("User not found", statusCode.NOT_FOUND));
+
+  res.status(statusCode.SUCCESS).json({
+    success: true,
     user,
   });
 });

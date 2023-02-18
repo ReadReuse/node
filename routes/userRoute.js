@@ -11,8 +11,10 @@ const {
   registerUserDetails,
   blockUser,
   updateCurrentLocation,
+  getUserDetailFromToken,
 } = require("../controller/userController");
 const { validate } = require("../middleware/validation");
+const { isAuthenticatedUser } = require("../middleware/auth");
 
 userRoutes.post("/login", validate("body", loginContract), userLogin);
 userRoutes.post("/verifyOtp", validate("body", otpVerifyContract), verifyOtp);
@@ -21,8 +23,14 @@ userRoutes.post(
   validate("body", userRegisterContract),
   registerUserDetails
 );
+
+userRoutes.get("/userDetails", isAuthenticatedUser, getUserDetailFromToken);
 userRoutes.post("/blockUser/:userId", blockUser);
 
-userRoutes.post("/updateCurrentLocation/:userId", updateCurrentLocation);
+userRoutes.post(
+  "/updateCurrentLocation",
+  isAuthenticatedUser,
+  updateCurrentLocation
+);
 
 module.exports = userRoutes;

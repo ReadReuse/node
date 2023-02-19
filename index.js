@@ -2,7 +2,7 @@ const app = require("./app");
 const dotenv = require("dotenv");
 const connectToDB = require("./libs/mongoose");
 
-dotenv.config({ path: "./config/.env" });
+dotenv.config({ path: ".env" });
 
 // Handling Uncaught Exception
 process.on("uncaughtException", (err) => {

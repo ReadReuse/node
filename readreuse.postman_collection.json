@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"mobile\": \"9926488445\"\r\n}",
+							"raw": "{\r\n    \"mobile\": \"8319369258\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -42,7 +42,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"otp\": 56789,\r\n    \"userId\": \"63cf9b570b4215d4192176df\"\r\n}",
+							"raw": "{\r\n    \"otp\": 34562,\r\n    \"userId\": \"63f5cd4bf7374fae9d02a87e\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -97,8 +97,18 @@
 					"response": []
 				},
 				{
-					"name": "blockUser",
+					"name": "blockUser (admin)",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"url": {
@@ -114,7 +124,197 @@
 							"variable": [
 								{
 									"key": "userId",
-									"value": "63cf9b570b4215d4192176df"
+									"value": "63e0922829728961667f57c8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user details from token (not required)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/user/userDetails",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"userDetails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update current location",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"lantitude\": \"251\",\r\n    \"longitude\": \"252\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user/updateCurrentLocation",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"updateCurrentLocation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all details count (admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/user/getAllCounts",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"getAllCounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user lists (admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/user/usersList",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"usersList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user details (admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/user/userDetails/:userId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"userDetails",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "63e0922829728961667f57c8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/user/searchUser?searchString=0822",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"searchUser"
+							],
+							"query": [
+								{
+									"key": "searchString",
+									"value": "0822"
 								}
 							]
 						}
@@ -566,6 +766,41 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "feed Details",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/feed/feedDetails/:feedId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"feed",
+								"feedDetails",
+								":feedId"
+							],
+							"variable": [
+								{
+									"key": "feedId",
+									"value": "63e8cb1bf42c1f52ecfd87c7"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -589,7 +824,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"RGPV Time table\",\r\n    \"description\": \"rgpv timetable description for refrence\",\r\n    \"tags\": [\"rgpv\", \"timetable\"],\r\n    \"keyPoint\": [\"5th semster rgpv timetable\"],\r\n    \"pdfData\": {\r\n        \"format\": \"pdf\",\r\n        \"location\": \"https://res.cloudinary.com/dwv7fnwns/image/upload/v1676185949/readreuse/1676185946930-RGPV%20timetable.pdf\",\r\n        \"original_filename\": \"1676185946930-RGPV timetable\",\r\n        \"folder\": \"readreuse\"\r\n    },\r\n    \"thumbnailImages\": [{\r\n        \"format\": \"png\",\r\n    \"location\": \"https://res.cloudinary.com/dwv7fnwns/image/upload/v1676186119/readreuse/1676186117503-Screenshot%202023-02-12%20124504.png\",\r\n    \"original_filename\": \"1676186117503-Screenshot 2023-02-12 124504\",\r\n    \"folder\": \"readreuse\"\r\n    }]\r\n}",
+							"raw": "{\r\n    \"title\": \"RGPV Time table\",\r\n    \"tags\": [\"rgpv\", \"timetable\"],\r\n    \"unitsData\": [\r\n        {   \r\n            \"unitTitle\": \"Unit:1 [This is a title)\",\r\n            \"unitDescription\": \"This is a unit unitDescription\",\r\n            \"pdfData\": {\r\n                    \"format\": \"pdf\",\r\n                    \"location\": \"https://res.cloudinary.com/dwv7fnwns/image/upload/v1676185949/readreuse/1676185946930-RGPV%20timetable.pdf\",\r\n                    \"original_filename\": \"1676185946930-RGPV timetable\",\r\n                    \"folder\": \"readreuse\"\r\n                }\r\n        }\r\n    ],\r\n    \"thumbnailImages\": [{\r\n        \"format\": \"png\",\r\n    \"location\": \"https://res.cloudinary.com/dwv7fnwns/image/upload/v1676186119/readreuse/1676186117503-Screenshot%202023-02-12%20124504.png\",\r\n    \"original_filename\": \"1676186117503-Screenshot 2023-02-12 124504\",\r\n    \"folder\": \"readreuse\"\r\n    }]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

@@ -6,6 +6,8 @@ const {
   consumeOtp,
 } = require("../utils/userUtils");
 const User = require("../schema/userSchema");
+const Notes = require("../schema/notesSchema");
+const Feeds = require("../schema/feedSchema");
 const { getJWTtoken } = require("../utils/jwt");
 const statusCode = require("../constant/statusCode");
 
@@ -126,14 +128,21 @@ exports.blockUser = catchAsyncError(async (req, res, next) => {
   user = await User.findByIdAndUpdate(
     req.params.userId,
     {
-      blocked: true,
+      blocked: !user.blocked,
     },
     { new: true }
   ).select("-otp");
 
+  let msg;
+  if (user.blocked) {
+    msg = "User blocked successfully.";
+  } else {
+    msg = "User unblocked successfully.";
+  }
+
   res.status(statusCode.SUCCESS).json({
     success: true,
-    message: "User blocked successfully.",
+    message: msg,
     user,
   });
 });
@@ -166,6 +175,63 @@ exports.getUserDetailFromToken = catchAsyncError(async (req, res, next) => {
   const user = await User.findById(req.user._id).select("-otp");
 
   if (!user)
+    return next(new ErrorHandler("User not found", statusCode.NOT_FOUND));
+
+  res.status(statusCode.SUCCESS).json({
+    success: true,
+    user,
+  });
+});
+
+exports.getAllDetailsCount = catchAsyncError(async (req, res, next) => {
+  const users = await User.count();
+  const feeds = await Feeds.count();
+  const notes = await Notes.count();
+
+  res.status(statusCode.SUCCESS).json({
+    success: true,
+    users,
+    feeds,
+    notes,
+  });
+});
+
+exports.getUserList = catchAsyncError(async (req, res, next) => {
+  const user = await User.find()
+    .limit(req.query.limit || 50)
+    .select("mobileNo name address collegeName blocked");
+
+  res.status(statusCode.SUCCESS).json({
+    success: true,
+    users: user,
+  });
+});
+
+exports.getUserDetails = catchAsyncError(async (req, res, next) => {
+  const user = await User.findById(req.params.userId).select(
+    "-otp -addressLocation -currentLocation -savedFeed -savedNotes"
+  );
+
+  if (!user)
+    return next(new ErrorHandler("User not found", statusCode.NOT_FOUND));
+
+  res.status(statusCode.SUCCESS).json({
+    success: true,
+    user,
+  });
+});
+
+exports.searchUser = catchAsyncError(async (req, res, next) => {
+  const user = await User.find({
+    $or: [
+      { name: { $regex: req.query.searchString, $options: "i" } },
+      { email: { $regex: req.query.searchString, $options: "i" } },
+      { enrollmentNo: { $regex: req.query.searchString, $options: "i" } },
+    ],
+  }).select("mobileNo name address collegeName blocked");
+
+  console.log(user);
+  if (!user.length > 0)
     return next(new ErrorHandler("User not found", statusCode.NOT_FOUND));
 
   res.status(statusCode.SUCCESS).json({

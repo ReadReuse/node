@@ -12,9 +12,13 @@ const {
   blockUser,
   updateCurrentLocation,
   getUserDetailFromToken,
+  getAllDetailsCount,
+  getUserList,
+  getUserDetails,
+  searchUser,
 } = require("../controller/userController");
 const { validate } = require("../middleware/validation");
-const { isAuthenticatedUser } = require("../middleware/auth");
+const { isAuthenticatedUser, authorizeRole } = require("../middleware/auth");
 
 userRoutes.post("/login", validate("body", loginContract), userLogin);
 userRoutes.post("/verifyOtp", validate("body", otpVerifyContract), verifyOtp);
@@ -25,12 +29,47 @@ userRoutes.post(
 );
 
 userRoutes.get("/userDetails", isAuthenticatedUser, getUserDetailFromToken);
-userRoutes.post("/blockUser/:userId", blockUser);
 
 userRoutes.post(
   "/updateCurrentLocation",
   isAuthenticatedUser,
   updateCurrentLocation
+);
+
+// admin routes
+
+userRoutes.get(
+  "/getAllCounts",
+  isAuthenticatedUser,
+  authorizeRole("ADMIN"),
+  getAllDetailsCount
+);
+
+userRoutes.get(
+  "/usersList",
+  isAuthenticatedUser,
+  authorizeRole("ADMIN"),
+  getUserList
+);
+
+userRoutes.get(
+  "/userDetails/:userId",
+  isAuthenticatedUser,
+  authorizeRole("ADMIN"),
+  getUserDetails
+);
+
+userRoutes.get(
+  "/searchUser",
+  isAuthenticatedUser,
+  authorizeRole("ADMIN"),
+  searchUser
+);
+userRoutes.post(
+  "/blockUser/:userId",
+  isAuthenticatedUser,
+  authorizeRole("ADMIN"),
+  blockUser
 );
 
 module.exports = userRoutes;

@@ -165,11 +165,8 @@ exports.searchNotesController = catchAsyncError(async (req, res, next) => {
   const search = await Notes.find({
     $or: [
       { title: { $regex: req.query.searchString, $options: "i" } },
-      { description: { $regex: req.query.searchString, $options: "i" } },
+
       { tags: { $in: [req.query.searchString] } },
-      {
-        keyPoint: { $in: [/[req.query.searchString]/] },
-      },
     ],
   });
 
@@ -181,3 +178,7 @@ exports.searchNotesController = catchAsyncError(async (req, res, next) => {
     feed: search,
   });
 });
+// { description: { $regex: req.query.searchString, $options: "i" } },
+// {
+//   keyPoint: { $in: [/[req.query.searchString]/] },
+// },

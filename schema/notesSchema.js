@@ -6,30 +6,37 @@ const notesSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    description: {
-      type: String,
-      required: true,
-    },
     tags: [
       {
         type: String,
       },
     ],
-    keyPoint: [String],
     user: {
       type: mongoose.Schema.ObjectId,
       ref: "Users",
       required: true,
     },
-    pdfData: {
-      format: String,
-      original_filename: String,
-      folder: {
-        type: String,
-        default: "readreuse",
+    unitsData: [
+      {
+        unitTitle: {
+          type: String,
+          required: true,
+        },
+        unitDescription: {
+          type: String,
+          required: true,
+        },
+        pdfData: {
+          format: String,
+          original_filename: String,
+          folder: {
+            type: String,
+            default: "readreuse",
+          },
+          location: String,
+        },
       },
-      location: String,
-    },
+    ],
     thumbnailImages: [
       {
         format: String,

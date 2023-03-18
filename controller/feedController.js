@@ -98,22 +98,30 @@ exports.listAllFeed = catchAsyncError(async (req, res, next) => {
 exports.blockedFeed = catchAsyncError(async (req, res, next) => {
   const feedId = req.params.feedId;
 
-  const checkFeed = await Feed.findById(feedId);
+  let feed = await Feed.findById(feedId);
 
-  if (checkFeed === null)
+  if (feed === null)
     return next(new ErrorHandler("Feed not found.", statusCode.NOT_FOUND));
 
-  const feed = await Feed.findByIdAndUpdate(
+  feed = await Feed.findByIdAndUpdate(
     feedId,
-    { blocked: true },
+    { blocked: !feed.blocked },
     {
       new: true,
       runValidator: true,
     }
   );
 
+  let msg;
+  if (feed.blocked) {
+    msg = "Feed blocked successfully.";
+  } else {
+    msg = "Feed unblocked successfully.";
+  }
+
   res.status(statusCode.SUCCESS).json({
     success: true,
+    message: msg,
     feed,
   });
 });
@@ -248,5 +256,26 @@ exports.searchFeedController = catchAsyncError(async (req, res, next) => {
   res.status(statusCode.SUCCESS).json({
     success: true,
     feed: search,
+  });
+});
+
+exports.feedDetails = catchAsyncError(async (req, res, next) => {
+  const feed = await Feed.findById(req.params.feedId);
+
+  if (!feed)
+    return next(new ErrorHandler("Feed not found", statusCode.NOT_FOUND));
+
+  res.status(statusCode.SUCCESS).json({
+    success: true,
+    feed,
+  });
+});
+
+exports.getAllFeedAdmin = catchAsyncError(async (req, res, next) => {
+  const feed = await Feed.find().limit(req.query.limit || 50);
+
+  res.status(statusCode.SUCCESS).json({
+    success: true,
+    feed,
   });
 });

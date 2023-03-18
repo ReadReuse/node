@@ -11,12 +11,7 @@ const feedSchema = mongoose.Schema(
       required: true,
     },
     description: String,
-    moreDetails: [
-      {
-        title: String,
-        description: String,
-      },
-    ],
+    moreDetails: [String],
     city: {
       type: String,
       required: true,

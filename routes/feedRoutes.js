@@ -16,6 +16,7 @@ const {
   editFeedController,
   bookmarkFeed,
   searchFeedController,
+  feedDetails,
 } = require("../controller/feedController");
 const { isAuthenticatedUser, authorizeRole } = require("../middleware/auth");
 const { validate } = require("../middleware/validation");
@@ -83,6 +84,13 @@ feedRoutes.delete(
   isAuthenticatedUser,
   authorizeRole("ADMIN"),
   deleteFeedByAdmin
+);
+
+feedRoutes.get(
+  "/feedDetails/:feedId",
+  isAuthenticatedUser,
+  authorizeRole("ADMIN"),
+  feedDetails
 );
 
 module.exports = feedRoutes;

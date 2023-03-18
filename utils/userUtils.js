@@ -25,6 +25,6 @@ exports.sendMobileSms = async (msg, phoneNo) => {
       console.log("Message sent");
     })
     .catch((err) => {
-      consolr.log(err);
+      console.log(err);
     });
 };

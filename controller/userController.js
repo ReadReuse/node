@@ -101,16 +101,18 @@ exports.registerUserDetails = catchAsyncError(async (req, res, next) => {
       new ErrorHandler("Otp is not verified", statusCode.BAD_REQUEST)
     );
 
-  let updatedUser = await User.findByIdAndUpdate(
-    userId,
-    {
-      ...req.body,
-    },
-    {
-      new: true,
-      runValidators: true,
-    }
-  ).select("-otp");
+  let payload = {
+    ...req.body,
+  };
+
+  if (user.profileCompletePercentage === 20) {
+    payload.profileCompletePercentage = 100;
+  }
+
+  let updatedUser = await User.findByIdAndUpdate(userId, payload, {
+    new: true,
+    runValidators: true,
+  }).select("-otp");
 
   res.status(201).json({
     success: true,

@@ -12,6 +12,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       validate: [isEmail, "Invalid Email Address {VALUE}"],
     },
+    profileCompletePercentage: {
+      type: Number,
+      default: 20,
+    },
     dob: {
       type: Date,
       trim: true,

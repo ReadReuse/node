@@ -23,10 +23,12 @@ exports.uploadAssets = catchAsyncError(async (req, res, next) => {
 
   return res.status(200).json({
     success: result.success,
-    format: result.fileData.format,
-    location: result.fileData.secure_url,
-    original_filename: result.fileData.original_filename,
-    folder: result.fileData.folder,
+    data: {
+      format: result.fileData.format,
+      location: result.fileData.secure_url,
+      original_filename: result.fileData.original_filename,
+      folder: result.fileData.folder,
+    },
   });
 });
 

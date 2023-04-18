@@ -13,15 +13,17 @@ exports.otpVerifyContract = Joi.object({
 });
 
 exports.userRegisterContract = Joi.object({
-  avatar: Joi.string().optional(),
+  avatar: Joi.object({
+    format: Joi.string().required(),
+    original_filename: Joi.string().required(),
+    folder: Joi.string().optional(),
+    location: Joi.string().required(),
+  }).optional(),
   name: Joi.string().required(),
   email: Joi.string()
     .email({ tlds: { allow: false } })
     .required(),
-  dob: Joi.date()
-    .iso()
-    .messages({ "date.format": `Date format is YYYY-MM-DD` })
-    .required(),
+  dob: Joi.date().required(),
   address: Joi.string().required(),
   collegeName: Joi.string().required(),
   location: Joi.object({
@@ -33,14 +35,10 @@ exports.userRegisterContract = Joi.object({
   graduationSemester: Joi.number().required(),
   course: Joi.string().required(),
   branch: Joi.string().required(),
-  city: Joi.string().required(),
+  city: Joi.string().optional(),
   locality: Joi.string().optional(),
-  state: Joi.string().required(),
+  state: Joi.string().optional(),
   addressLocation: Joi.object({
-    lantitude: Joi.number().required(),
-    longitude: Joi.number().required(),
-  }).required(),
-  currentLocation: Joi.object({
     lantitude: Joi.number().required(),
     longitude: Joi.number().required(),
   }).required(),

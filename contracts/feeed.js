@@ -4,14 +4,7 @@ exports.createFeedContract = Joi.object({
   title: Joi.string().required(),
   price: Joi.number().required(),
   description: Joi.string().optional(),
-  moreDetails: Joi.array()
-    .items(
-      Joi.object({
-        title: Joi.string().required(),
-        description: Joi.string().required(),
-      })
-    )
-    .optional(),
+  moreDetails: Joi.array().items(Joi.string()).optional(),
   city: Joi.string().required(),
   locality: Joi.string().optional(),
   state: Joi.string().required(),

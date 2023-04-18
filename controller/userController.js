@@ -93,10 +93,12 @@ exports.verifyOtp = catchAsyncError(async (req, res, next) => {
 
 exports.registerUserDetails = catchAsyncError(async (req, res, next) => {
   const userId = req.params.userId;
-  let user = await User.findById(userId);
+
+  let user = await User.find({ _id: userId });
+
   if (!user)
     return next(new ErrorHandler("User not exist.", statusCode.BAD_REQUEST));
-  if (!user.otp.consumed)
+  if (!user[0].otp.consumed)
     return next(
       new ErrorHandler("Otp is not verified", statusCode.BAD_REQUEST)
     );
@@ -105,7 +107,7 @@ exports.registerUserDetails = catchAsyncError(async (req, res, next) => {
     ...req.body,
   };
 
-  if (user.profileCompletePercentage === 20) {
+  if (user.profileCompletePercentage <= 20) {
     payload.profileCompletePercentage = 100;
   }
 
@@ -114,7 +116,7 @@ exports.registerUserDetails = catchAsyncError(async (req, res, next) => {
     runValidators: true,
   }).select("-otp");
 
-  res.status(201).json({
+  res.status(statusCode.SUCCESS).json({
     success: true,
     message: "User updated successfully.",
     user: updatedUser,

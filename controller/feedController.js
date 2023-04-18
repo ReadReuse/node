@@ -63,8 +63,9 @@ exports.listAllFeed = catchAsyncError(async (req, res, next) => {
         feed[i].locationCoords.lantitude,
         feed[i].locationCoords.longitude,
         "K"
-      ) <= 100
+      )
     ) {
+      // <= 500
       tempData.push({
         ...feed[i]._doc,
         distance: distance(
@@ -88,9 +89,14 @@ exports.listAllFeed = catchAsyncError(async (req, res, next) => {
       )
     );
 
+  let Data = [];
+  for (let i = 0; i < (req.query.limit || 25); i++) {
+    sortedFilterData[i] && Data.push(sortedFilterData[i]);
+  }
+
   res.status(statusCode.SUCCESS).json({
     success: true,
-    feed: sortedFilterData,
+    feed: Data,
   });
 });
 

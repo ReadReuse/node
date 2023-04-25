@@ -50,9 +50,18 @@ exports.listAllNotes = catchAsyncError(async (req, res, next) => {
     .sort({ _id: -1 })
     .limit(req.query.limit || 20);
 
+  let finalNotesArray = notes.map((e, i) => {
+    if (req.user.savedNotes.includes(e._doc._id)) {
+      return { ...e._doc, bookmarked: true };
+    } else {
+      return { ...e._doc, bookmarked: false };
+    }
+  });
+
+  console.log(finalNotesArray);
   res.status(statusCode.SUCCESS).json({
     success: true,
-    notes,
+    finalNotesArray,
   });
 });
 

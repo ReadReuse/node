@@ -66,16 +66,31 @@ exports.listAllFeed = catchAsyncError(async (req, res, next) => {
       )
     ) {
       // <= 500
-      tempData.push({
-        ...feed[i]._doc,
-        distance: distance(
-          req.user.currentLocation.lantitude,
-          req.user.currentLocation.longitude,
-          feed[i].locationCoords.lantitude,
-          feed[i].locationCoords.longitude,
-          "K"
-        ),
-      });
+      if (req.user.savedFeed.includes(feed[i]._doc._id)) {
+        tempData.push({
+          ...feed[i]._doc,
+          distance: distance(
+            req.user.currentLocation.lantitude,
+            req.user.currentLocation.longitude,
+            feed[i].locationCoords.lantitude,
+            feed[i].locationCoords.longitude,
+            "K"
+          ),
+          bookmarked: true,
+        });
+      } else {
+        tempData.push({
+          ...feed[i]._doc,
+          distance: distance(
+            req.user.currentLocation.lantitude,
+            req.user.currentLocation.longitude,
+            feed[i].locationCoords.lantitude,
+            feed[i].locationCoords.longitude,
+            "K"
+          ),
+          bookmarked: false,
+        });
+      }
     }
   }
 

@@ -61,7 +61,7 @@ exports.listAllNotes = catchAsyncError(async (req, res, next) => {
   console.log(finalNotesArray);
   res.status(statusCode.SUCCESS).json({
     success: true,
-    finalNotesArray,
+    notes: finalNotesArray,
   });
 });
 

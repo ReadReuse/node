@@ -6,6 +6,7 @@ const {
   consumeOtp,
 } = require("../utils/userUtils");
 const User = require("../schema/userSchema");
+const Feed = require("../schema/feedSchema");
 const Notes = require("../schema/notesSchema");
 const Feeds = require("../schema/feedSchema");
 const { getJWTtoken } = require("../utils/jwt");
@@ -241,5 +242,31 @@ exports.searchUser = catchAsyncError(async (req, res, next) => {
   res.status(statusCode.SUCCESS).json({
     success: true,
     user,
+  });
+});
+
+exports.savedFeedsData = catchAsyncError(async (req, res, next) => {
+  const feeds = await Feed.find({ _id: { $in: req.user.savedFeed } });
+
+  if (!feeds.length > 0) {
+    return next(new ErrorHandler("No feed is saved"));
+  }
+
+  res.status(statusCode.SUCCESS).json({
+    success: true,
+    feeds,
+  });
+});
+
+exports.savedNotesData = catchAsyncError(async (req, res, next) => {
+  const notes = await Notes.find({ _id: { $in: req.user.savedNotes } });
+
+  if (!notes.length > 0) {
+    return next(new ErrorHandler("No notes is saved"));
+  }
+
+  res.status(statusCode.SUCCESS).json({
+    success: true,
+    notes,
   });
 });

@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"mobile\": \"8319369258\"\r\n}",
+							"raw": "{\r\n    \"mobile\": \"7389750432\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -69,7 +69,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Rehan152\",\r\n    \"email\": \"test12@test.com\",\r\n    \"dob\": \"2001-10-24\",\r\n    \"address\": \"Pithampur\",\r\n    \"collegeName\": \"SVCE\",\r\n    \"enrollmentNo\": \"0822Cs201060\",\r\n    \"graduationYear\": \"3\",\r\n    \"graduationSemester\": \"6\",\r\n    \"course\": \"B Tech\",\r\n    \"branch\": \"CS\",\r\n    \"city\": \"indore\",\r\n    \"state\": \"mp\",\r\n    \"addressLocation\": {\r\n      \"lantitude\": 22.611365,\r\n      \"longitude\": 75.680277\r\n    },\r\n    \"currentLocation\": {\r\n      \"lantitude\": 22.611365,\r\n      \"longitude\": 75.680277\r\n    }\r\n}",
+							"raw": "{\r\n    \"name\": \"Rehan152\",\r\n    \"email\": \"test12@test.com\",\r\n    \"dob\": \"2001-10-24\",\r\n    \"address\": \"Pithampur\",\r\n    \"collegeName\": \"SVCE\",\r\n    \"enrollmentNo\": \"0822Cs201060\",\r\n    \"graduationYear\": \"3\",\r\n    \"graduationSemester\": \"6\",\r\n    \"course\": \"B Tech\",\r\n    \"branch\": \"CS\",\r\n    \"city\": \"indore\",\r\n    \"state\": \"mp\",\r\n    \"addressLocation\": {\r\n      \"lantitude\": 22.611365,\r\n      \"longitude\": 75.680277\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -320,6 +320,62 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "savedFeedByUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/user/savedFeedByUser",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"savedFeedByUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "savedNotesByUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/user/savedNotesByUser",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"savedNotesByUser"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -347,7 +403,7 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "/C:/Users/ASUS/Downloads/Screenshot 2023-02-12 124504.png"
+									"src": "/C:/Users/ASUS/Downloads/MinorReportFinal.pdf"
 								}
 							]
 						},
@@ -423,7 +479,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"delete2\",\r\n    \"price\": 100,\r\n    \"description\": \"some description 5\",\r\n    \"moreDetails\": [\r\n        {\r\n            \"title\": \"key1\", \r\n            \"description\": \"value1\"\r\n        }, \r\n        {\r\n            \"title\": \"key2\",\r\n            \"description\": \"value2\"\r\n        }\r\n    ],\r\n    \"city\": \"Pithampur5\",\r\n    \"locality\": \"some locality\",\r\n    \"state\": \"mpf\",\r\n    \"locationCoords\": {\r\n        \"lantitude\": 22.665524,\r\n        \"longitude\": 71.670758\r\n    },\r\n    \"avatar\": [\r\n        {\r\n            \"format\": \"png\",\r\n            \"original_filename\": \"1675616641170-Fitz - Gym Buddies\",\r\n            \"folder\": \"readreuse\",\r\n            \"location\": \"https://res.cloudinary.com/dwv7fnwns/image/upload/v1675616644/readreuse/1675616641170-Fitz%20-%20Gym%20Buddies.png\"\r\n        }\r\n    ],\r\n    \"tags\": [\"aa\", \"bb\", \"cc\"]\r\n}",
+							"raw": "{\r\n    \"title\": \"Test1\",\r\n    \"price\": 100,\r\n    \"description\": \"some description 5\",\r\n    \"moreDetails\": [\r\n       \"detail1\", \"detail2\"\r\n    ],\r\n    \"city\": \"Pithampur5\",\r\n    \"locality\": \"some locality\",\r\n    \"state\": \"mpf\",\r\n    \"locationCoords\": {\r\n        \"lantitude\": 22.719568,\r\n        \"longitude\": 75.857727\r\n    },\r\n    \"avatar\": [\r\n        {\r\n            \"format\": \"png\",\r\n            \"original_filename\": \"1675616641170-Fitz - Gym Buddies\",\r\n            \"folder\": \"readreuse\",\r\n            \"location\": \"https://res.cloudinary.com/dwv7fnwns/image/upload/v1675616644/readreuse/1675616641170-Fitz%20-%20Gym%20Buddies.png\"\r\n        }\r\n    ],\r\n    \"tags\": [\"aa\", \"bb\", \"cc\"]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -726,7 +782,7 @@
 							"variable": [
 								{
 									"key": "feedId",
-									"value": "63e25cbdcb6a0c81c109e9a6"
+									"value": "643efe6c0b314e5b94cac6d5"
 								}
 							]
 						}
@@ -824,7 +880,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"RGPV Time table\",\r\n    \"tags\": [\"rgpv\", \"timetable\"],\r\n    \"unitsData\": [\r\n        {   \r\n            \"unitTitle\": \"Unit:1 [This is a title)\",\r\n            \"unitDescription\": \"This is a unit unitDescription\",\r\n            \"pdfData\": {\r\n                    \"format\": \"pdf\",\r\n                    \"location\": \"https://res.cloudinary.com/dwv7fnwns/image/upload/v1676185949/readreuse/1676185946930-RGPV%20timetable.pdf\",\r\n                    \"original_filename\": \"1676185946930-RGPV timetable\",\r\n                    \"folder\": \"readreuse\"\r\n                }\r\n        }\r\n    ],\r\n    \"thumbnailImages\": [{\r\n        \"format\": \"png\",\r\n    \"location\": \"https://res.cloudinary.com/dwv7fnwns/image/upload/v1676186119/readreuse/1676186117503-Screenshot%202023-02-12%20124504.png\",\r\n    \"original_filename\": \"1676186117503-Screenshot 2023-02-12 124504\",\r\n    \"folder\": \"readreuse\"\r\n    }]\r\n}",
+							"raw": "{\r\n  \"title\": \"ENGINEERING PHYSICS\",\r\n  \"tags\": [\r\n    \"physics\",\r\n    \"cs\",\r\n    \"bt201\"\r\n  ],\r\n  \"unitsData\": [\r\n    {\r\n      \"unitTitle\": \"Unit:1 [Module 1])\",\r\n      \"unitDescription\": \"Wave nature of particles and the Schrodinger equation (8 lectures) Introduction to Quantum mechanics, Wave nature of Particles, operators ,Time-dependent and timeindependent Schrodinger equation for wavefunction, Application: Particle in a One dimensional Box, Born interpretation, Free-particle wavefunction and wave-packets, vg and vp relation Uncertainty principle.\",\r\n      \"pdfData\": {\r\n        \"format\": \"pdf\",\r\n        \"location\": \"https://res.cloudinary.com/dwv7fnwns/image/upload/v1682400526/readreuse/1682400491091-BT201%20unit%201-%2Cphysics.pdf\",\r\n        \"original_filename\": \"1682400491091-BT201 unit 1-,physics\",\r\n        \"folder\": \"readreuse\"\r\n      }\r\n    },\r\n    {\r\n      \"unitTitle\": \"Unit:2 [Module 2])\",\r\n      \"unitDescription\": \"Wave optics (8 lectures) Huygens’ principle, superposition of waves and interference of light by wave front splitting and amplitude splitting; Young’s double slit experiment, Newton’s rings, Michelson interferometer, MachZehnder interferometer.Farunhofer diffraction from a single slit and a circular aperture, the Rayleigh criterion for limit of resolution and its application to vision; Diffraction gratings and their resolving power.\",\r\n      \"pdfData\": {\r\n        \"format\": \"pdf\",\r\n        \"location\": \"https://res.cloudinary.com/dwv7fnwns/image/upload/v1682400951/readreuse/1682400911292-Unit%203%20imp%20Ques%20BT%20201.%2CPhysics.pdf\",\r\n        \"original_filename\": \"1682400911292-Unit 3 imp Ques BT 201.,Physics\",\r\n        \"folder\": \"readreuse\"\r\n      }\r\n    },\r\n    {\r\n      \"unitTitle\": \"Unit:5 [Module 5])\",\r\n      \"unitDescription\": \"Electrostatics in vacuum (8 lectures) Calculation of electric field and electrostatic potential for a charge distribution; Electric displacement, Basic Introduction to Dielectrics, Gradient, Divergence and curl,Stokes’ theorem, Gauss Theorem, Continuity equation for current densities; Maxwell’s equation in vacuum and non-conducting medium; Poynting vector.\",\r\n      \"pdfData\": {\r\n        \"format\": \"pdf\",\r\n        \"location\": \"https://res.cloudinary.com/dwv7fnwns/image/upload/v1682401576/readreuse/1682401540747-UNIT%205%20imp%20ques%20BT%20201%20solution.%2CPhysics.pdf\",\r\n        \"original_filename\": \"1682401540747-UNIT 5 imp ques BT 201 solution.,Physics\",\r\n        \"folder\": \"readreuse\"\r\n      }\r\n    }\r\n  ],\r\n  \"thumbnailImages\": [\r\n    {\r\n      \"format\": \"png\",\r\n      \"location\": \"https://res.cloudinary.com/dwv7fnwns/image/upload/v1676186119/readreuse/1676186117503-Screenshot%202023-02-12%20124504.png\",\r\n      \"original_filename\": \"1676186117503-Screenshot 2023-02-12 124504\",\r\n      \"folder\": \"readreuse\"\r\n    }\r\n  ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

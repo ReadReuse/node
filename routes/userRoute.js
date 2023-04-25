@@ -16,6 +16,8 @@ const {
   getUserList,
   getUserDetails,
   searchUser,
+  savedFeedsData,
+  savedNotesData,
 } = require("../controller/userController");
 const { validate } = require("../middleware/validation");
 const { isAuthenticatedUser, authorizeRole } = require("../middleware/auth");
@@ -35,6 +37,10 @@ userRoutes.post(
   isAuthenticatedUser,
   updateCurrentLocation
 );
+
+userRoutes.get("/savedFeedByUser", isAuthenticatedUser, savedFeedsData);
+
+userRoutes.get("/savedNotesByUser", isAuthenticatedUser, savedNotesData);
 
 // admin routes
 

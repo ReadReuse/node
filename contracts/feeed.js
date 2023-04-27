@@ -5,9 +5,9 @@ exports.createFeedContract = Joi.object({
   price: Joi.number().required(),
   description: Joi.string().optional(),
   moreDetails: Joi.array().items(Joi.string()).optional(),
-  city: Joi.string().required(),
+  address: Joi.string().required(),
   locality: Joi.string().optional(),
-  state: Joi.string().required(),
+  state: Joi.string().optional(),
   avatar: Joi.array()
     .items(
       Joi.object({
@@ -30,7 +30,7 @@ exports.updateFeedContract = Joi.object({
   price: Joi.number(),
   description: Joi.string(),
   moreDetails: Joi.array().items(Joi.string()),
-  city: Joi.string(),
+  address: Joi.string(),
   locality: Joi.string(),
   state: Joi.string(),
   avatar: Joi.array().items(

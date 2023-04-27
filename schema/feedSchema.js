@@ -12,7 +12,7 @@ const feedSchema = mongoose.Schema(
     },
     description: String,
     moreDetails: [String],
-    city: {
+    address: {
       type: String,
       required: true,
     },
@@ -21,7 +21,6 @@ const feedSchema = mongoose.Schema(
     },
     state: {
       type: String,
-      required: true,
     },
     blocked: {
       type: Boolean,

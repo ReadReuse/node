@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"mobile\": \"7389750432\"\r\n}",
+							"raw": "{\r\n    \"mobile\": \"9926488445\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -42,7 +42,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"otp\": 34562,\r\n    \"userId\": \"63f5cd4bf7374fae9d02a87e\"\r\n}",
+							"raw": "{\r\n    \"otp\": 56789,\r\n    \"userId\": \"63cf9b570b4215d4192176df\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -376,6 +376,62 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "getUserDataCount",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/user/getUserDataCount",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"getUserDataCount"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUserCreatedFeed",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/user/getUserCreatedFeed",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"getUserCreatedFeed"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -479,7 +535,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"Test1\",\r\n    \"price\": 100,\r\n    \"description\": \"some description 5\",\r\n    \"moreDetails\": [\r\n       \"detail1\", \"detail2\"\r\n    ],\r\n    \"city\": \"Pithampur5\",\r\n    \"locality\": \"some locality\",\r\n    \"state\": \"mpf\",\r\n    \"locationCoords\": {\r\n        \"lantitude\": 22.719568,\r\n        \"longitude\": 75.857727\r\n    },\r\n    \"avatar\": [\r\n        {\r\n            \"format\": \"png\",\r\n            \"original_filename\": \"1675616641170-Fitz - Gym Buddies\",\r\n            \"folder\": \"readreuse\",\r\n            \"location\": \"https://res.cloudinary.com/dwv7fnwns/image/upload/v1675616644/readreuse/1675616641170-Fitz%20-%20Gym%20Buddies.png\"\r\n        }\r\n    ],\r\n    \"tags\": [\"aa\", \"bb\", \"cc\"]\r\n}",
+							"raw": "{\r\n    \"title\": \"Test1\",\r\n    \"price\": 100,\r\n    \"description\": \"some description 5\",\r\n    \"moreDetails\": [\r\n       \"detail1\", \"detail2\"\r\n    ],\r\n    \"address\": \"Pithampur5\",\r\n    \"locality\": \"some locality\",\r\n    \"state\": \"mpf\",\r\n    \"locationCoords\": {\r\n        \"lantitude\": 22.719568,\r\n        \"longitude\": 75.857727\r\n    },\r\n    \"avatar\": [\r\n        {\r\n            \"format\": \"png\",\r\n            \"original_filename\": \"1675616641170-Fitz - Gym Buddies\",\r\n            \"folder\": \"readreuse\",\r\n            \"location\": \"https://res.cloudinary.com/dwv7fnwns/image/upload/v1675616644/readreuse/1675616641170-Fitz%20-%20Gym%20Buddies.png\"\r\n        }\r\n    ],\r\n    \"tags\": [\"aa\", \"bb\", \"cc\"]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1005,7 +1061,7 @@
 							"variable": [
 								{
 									"key": "noteId",
-									"value": "63e89c086c261f96cce3e341"
+									"value": "64156556a6b880d8e753f621"
 								}
 							]
 						}

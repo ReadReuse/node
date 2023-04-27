@@ -270,3 +270,29 @@ exports.savedNotesData = catchAsyncError(async (req, res, next) => {
     notes,
   });
 });
+
+exports.getUserDataCount = catchAsyncError(async (req, res, next) => {
+  const activeFeedCount = await Feed.find({
+    user: req.user._id,
+    blocked: false,
+  }).count();
+  const blockFeedCount = await Feed.find({
+    user: req.user._id,
+    blocked: true,
+  }).count();
+
+  res.status(statusCode.SUCCESS).json({
+    success: true,
+    activeFeedCount,
+    blockFeedCount,
+  });
+});
+
+exports.getUserCreatedFeed = catchAsyncError(async (req, res, next) => {
+  const feeds = await Feed.find({ user: req.user._id });
+
+  res.status(statusCode.SUCCESS).json({
+    success: true,
+    feeds,
+  });
+});

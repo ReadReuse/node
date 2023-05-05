@@ -158,7 +158,7 @@ exports.updateCurrentLocation = catchAsyncError(async (req, res, next) => {
   if (!user)
     return next(new ErrorHandler("User not exist", statusCode.BAD_REQUEST));
 
-  user = await User.findByIdAndUpdate(
+  let newUser = await User.findByIdAndUpdate(
     req.user._id,
     {
       currentLocation: {
@@ -172,7 +172,7 @@ exports.updateCurrentLocation = catchAsyncError(async (req, res, next) => {
   res.status(statusCode.SUCCESS).json({
     success: true,
     message: "User Location updated successfully.",
-    user,
+    user: newUser,
   });
 });
 
@@ -252,9 +252,16 @@ exports.savedFeedsData = catchAsyncError(async (req, res, next) => {
     return next(new ErrorHandler("No feed is saved"));
   }
 
+  let finalFeedsArray = feeds.map((e, i) => {
+    if (req.user.savedFeed.includes(e._doc._id)) {
+      return { ...e._doc, bookmarked: true };
+    } else {
+      return { ...e._doc, bookmarked: false };
+    }
+  });
   res.status(statusCode.SUCCESS).json({
     success: true,
-    feeds,
+    feeds: finalFeedsArray,
   });
 });
 
@@ -265,9 +272,17 @@ exports.savedNotesData = catchAsyncError(async (req, res, next) => {
     return next(new ErrorHandler("No notes is saved"));
   }
 
+  let finalNotesArray = notes.map((e, i) => {
+    if (req.user.savedNotes.includes(e._doc._id)) {
+      return { ...e._doc, bookmarked: true };
+    } else {
+      return { ...e._doc, bookmarked: false };
+    }
+  });
+
   res.status(statusCode.SUCCESS).json({
     success: true,
-    notes,
+    notes: finalNotesArray,
   });
 });
 
@@ -285,14 +300,5 @@ exports.getUserDataCount = catchAsyncError(async (req, res, next) => {
     success: true,
     activeFeedCount,
     blockFeedCount,
-  });
-});
-
-exports.getUserCreatedFeed = catchAsyncError(async (req, res, next) => {
-  const feeds = await Feed.find({ user: req.user._id });
-
-  res.status(statusCode.SUCCESS).json({
-    success: true,
-    feeds,
   });
 });

@@ -117,9 +117,16 @@ exports.verifyNotes = catchAsyncError(async (req, res, next) => {
 exports.getUnverifiedNotesList = catchAsyncError(async (req, res, next) => {
   const note = await Notes.where({ verified: false });
 
+  let finalNotesArray = note.map((e, i) => {
+    if (req.user.savedNotes.includes(e._doc._id)) {
+      return { ...e._doc, bookmarked: true };
+    } else {
+      return { ...e._doc, bookmarked: false };
+    }
+  });
   res.status(statusCode.SUCCESS).json({
     success: true,
-    note,
+    note: finalNotesArray,
   });
 });
 
@@ -180,11 +187,19 @@ exports.searchNotesController = catchAsyncError(async (req, res, next) => {
   });
 
   if (!search.length > 0)
-    return next(new ErrorHandler("Feed not found", statusCode.NOT_FOUND));
+    return next(new ErrorHandler("Notes not found", statusCode.NOT_FOUND));
+
+  let finalNotesArray = search.map((e, i) => {
+    if (req.user.savedNotes.includes(e._doc._id)) {
+      return { ...e._doc, bookmarked: true };
+    } else {
+      return { ...e._doc, bookmarked: false };
+    }
+  });
 
   res.status(statusCode.SUCCESS).json({
     success: true,
-    feed: search,
+    notes: finalNotesArray,
   });
 });
 // { description: { $regex: req.query.searchString, $options: "i" } },

@@ -45,8 +45,9 @@ exports.userLogin = catchAsyncError(async (req, res, next) => {
   }
   console.log(mobile, typeof mobile);
 
-  let msg = `Your ReadReuse app verification code is ${otpValue}. It is valid for 10 minutes only. ReadReuse`;
-  if (mobile !== "9926488445") await sendMobileSms(msg, mobile);
+  // let msg = `Your ReadReuse app verification code is ${otpValue}. It is valid for 10 minutes only. ReadReuse`;
+  let msg = `ReadReuse verification code is ${otpValue} valid for 10 minutes.`;
+  await sendMobileSms(msg, mobile);
 
   res.status(statusCode.SUCCESS).json({
     sucess: true,

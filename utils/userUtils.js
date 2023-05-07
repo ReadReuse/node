@@ -1,7 +1,7 @@
 const catchAsyncError = require("../middleware/catchAsyncError");
 const User = require("../schema/userSchema");
 let sendMsg = require("aws-sns-sms");
-
+const axios = require("axios");
 const min = 10000;
 const max = 99999;
 exports.generateOtp = () => Math.floor(Math.random() * (max - min + 1)) + min;
@@ -10,21 +10,25 @@ exports.consumeOtp = async (userId) =>
   User.findOneAndUpdate({ _id: userId }, { $set: { "otp.consumed": true } });
 
 exports.sendMobileSms = async (msg, phoneNo) => {
-  let awsConfig = {
-    accessKeyId: process.env.AWS_ACCESS_KEY,
-    secretAccessKey: process.env.AWS_SECRET_KEY,
-    region: process.env.AWS_REGION,
-  };
-  let message = {
-    message: msg,
-    sender: "ReadReuse",
-    phoneNumber: "+91" + phoneNo, // phoneNumber along with country code
-  };
-  sendMsg(awsConfig, message)
-    .then((data) => {
-      console.log("Message sent");
+  // const endpoint = `http://www.fast2sms.com/dev/bulkV2?authorization=${
+  //   process.env.SMS_KEY
+  // }&sender_id="TXTIND"&message=${String(msg)}&route=v3&numbers=${phoneNo}`;
+  const endpoint = `http://jsonplaceholder.typicode.com/todos/1`;
+  console.log(endpoint, { headers: { "Access-Control-Allow-Origin": "*" } });
+  await axios
+    .get(endpoint)
+    .then((response) => {
+      console.log(response);
     })
-    .catch((err) => {
-      console.log(err);
+    .catch((error) => {
+      console.log(error);
     });
+  // await fetch(endpoint)
+  //   .then((res) => {
+  //     console.log(res);
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
+  // return response;
 };

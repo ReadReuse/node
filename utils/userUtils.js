@@ -10,25 +10,15 @@ exports.consumeOtp = async (userId) =>
   User.findOneAndUpdate({ _id: userId }, { $set: { "otp.consumed": true } });
 
 exports.sendMobileSms = async (msg, phoneNo) => {
-  // const endpoint = `http://www.fast2sms.com/dev/bulkV2?authorization=${
-  //   process.env.SMS_KEY
-  // }&sender_id="TXTIND"&message=${String(msg)}&route=v3&numbers=${phoneNo}`;
-  const endpoint = `http://jsonplaceholder.typicode.com/todos/1`;
-  console.log(endpoint, { headers: { "Access-Control-Allow-Origin": "*" } });
+  const endpoint = `http://www.fast2sms.com/dev/bulkV2?authorization=${
+    process.env.SMS_KEY
+  }&message=${String(msg)}&route=v3&numbers=${phoneNo}`;
   await axios
-    .get(endpoint)
+    .get(endpoint, { headers: { "Access-Control-Allow-Origin": "*" } })
     .then((response) => {
       console.log(response);
     })
     .catch((error) => {
       console.log(error);
     });
-  // await fetch(endpoint)
-  //   .then((res) => {
-  //     console.log(res);
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
-  // return response;
 };

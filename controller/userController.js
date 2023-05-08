@@ -109,7 +109,7 @@ exports.registerUserDetails = catchAsyncError(async (req, res, next) => {
     ...req.body,
   };
 
-  if (user.profileCompletePercentage <= 20) {
+  if (user.profileCompletePercentage !== 100) {
     payload.profileCompletePercentage = 100;
   }
 

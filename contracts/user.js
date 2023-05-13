@@ -14,10 +14,10 @@ exports.otpVerifyContract = Joi.object({
 
 exports.userRegisterContract = Joi.object({
   avatar: Joi.object({
-    format: Joi.string().required(),
-    original_filename: Joi.string().required(),
+    format: Joi.string().optional(),
+    original_filename: Joi.string().optional(),
     folder: Joi.string().optional(),
-    location: Joi.string().required(),
+    location: Joi.string().optional(),
   }).optional(),
   name: Joi.string().required(),
   email: Joi.string()

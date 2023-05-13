@@ -47,7 +47,7 @@ exports.userLogin = catchAsyncError(async (req, res, next) => {
 
   // let msg = `Your ReadReuse app verification code is ${otpValue}. It is valid for 10 minutes only. ReadReuse`;
   let msg = `ReadReuse verification code is ${otpValue} valid for 10 minutes.`;
-  // await sendMobileSms(msg, mobile);
+  await sendMobileSms(msg, mobile);
 
   res.status(statusCode.SUCCESS).json({
     sucess: true,
@@ -247,7 +247,11 @@ exports.searchUser = catchAsyncError(async (req, res, next) => {
 });
 
 exports.savedFeedsData = catchAsyncError(async (req, res, next) => {
-  const feeds = await Feed.find({ _id: { $in: req.user.savedFeed } });
+  const feeds = await Feed.find({
+    _id: { $in: req.user.savedFeed },
+    blocked: false,
+    soldOut: false,
+  }).populate("user", "name avatar mobileNo");
 
   if (!feeds.length > 0) {
     return next(new ErrorHandler("No feed is saved"));

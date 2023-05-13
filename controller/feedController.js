@@ -50,7 +50,7 @@ exports.editFeedController = catchAsyncError(async (req, res, next) => {
 exports.listAllFeed = catchAsyncError(async (req, res, next) => {
   const feed = await Feed.find({ blocked: false, soldOut: false }).populate(
     "user",
-    "name avatar"
+    "name avatar mobileNo"
   );
 
   let tempData = [];

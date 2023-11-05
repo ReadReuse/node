@@ -9,10 +9,10 @@ exports.generateOtp = () => Math.floor(Math.random() * (max - min + 1)) + min;
 exports.consumeOtp = async (userId) =>
   User.findOneAndUpdate({ _id: userId }, { $set: { "otp.consumed": true } });
 
-exports.sendMobileSms = async (msg, phoneNo) => {
-  const endpoint = `http://www.fast2sms.com/dev/bulkV2?authorization=${
+exports.sendMobileSms = async (otp, phoneNo) => {
+  const endpoint = `GET https://www.fast2sms.com/dev/bulkV2?authorization=${
     process.env.SMS_KEY
-  }&message=${String(msg)}&route=v3&numbers=${phoneNo}`;
+  }&variables_values=${String(otp)}&route=otp&numbers=${phoneNo}`;
   await axios
     .get(endpoint, { headers: { "Access-Control-Allow-Origin": "*" } })
     .then((response) => {

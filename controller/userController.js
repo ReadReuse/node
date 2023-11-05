@@ -33,10 +33,12 @@ exports.userLogin = catchAsyncError(async (req, res, next) => {
   user = await User.findOne({ mobileNo: mobile });
 
   if (!user) {
-    user = await User.create({
+    // user = await User.insert/
+    user = new User({
       mobileNo: mobile,
       otp: otpObject,
     }).select("-otp");
+    await user.save();
   } else {
     user = await User.findOneAndUpdate(
       { mobileNo: mobile },
@@ -44,12 +46,10 @@ exports.userLogin = catchAsyncError(async (req, res, next) => {
     ).select("-otp");
   }
 
-  // let msg = `Your ReadReuse app verification code is ${otpValue}. It is valid for 10 minutes only. ReadReuse`;
-  let msg = `ReadReuse verification code is ${otpValue} valid for 10 minutes.`;
-  if (mobile !== "9926488445") await sendMobileSms(msg, mobile);
+  if (mobile !== "9926488445") await sendMobileSms(otpValue, mobile);
 
   res.status(statusCode.SUCCESS).json({
-    sucess: true,
+    success: true,
     user,
   });
 });

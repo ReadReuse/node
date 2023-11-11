@@ -214,7 +214,7 @@ exports.getUserList = catchAsyncError(async (req, res, next) => {
 
 exports.getUserDetails = catchAsyncError(async (req, res, next) => {
   const user = await User.findById(req.params.userId).select(
-    "-otp -addressLocation -currentLocation -savedFeed -savedNotes"
+    "-otp  -currentLocation -savedFeed -savedNotes"
   );
 
   if (!user)
@@ -231,7 +231,6 @@ exports.searchUser = catchAsyncError(async (req, res, next) => {
     $or: [
       { name: { $regex: req.query.searchString, $options: "i" } },
       { email: { $regex: req.query.searchString, $options: "i" } },
-      { enrollmentNo: { $regex: req.query.searchString, $options: "i" } },
     ],
   }).select("mobileNo name address collegeName blocked");
 

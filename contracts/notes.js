@@ -13,6 +13,10 @@ exports.createNotesContract = Joi.object({
       location: Joi.string().required(),
     }).required(),
   }),
+  graduationYear: Joi.string().required(),
+  graduationSemester: Joi.string().required(),
+  course: Joi.string().required(),
+  branch: Joi.string().required(),
   thumbnailImages: Joi.array()
     .items(
       Joi.object({
@@ -39,6 +43,10 @@ exports.updateNotesContract = Joi.object({
       location: Joi.string().required(),
     }).optional(),
   }),
+  graduationYear: Joi.string().optional(),
+  graduationSemester: Joi.string().optional(),
+  course: Joi.string().optional(),
+  branch: Joi.string().optional(),
   thumbnailImages: Joi.array()
     .items(
       Joi.object({
@@ -49,4 +57,11 @@ exports.updateNotesContract = Joi.object({
       })
     )
     .optional(),
+});
+
+exports.noteBasedOnGraduationContract = Joi.object({
+  graduationYear: Joi.string().optional(),
+  graduationSemester: Joi.string().optional(),
+  course: Joi.string().optional(),
+  branch: Joi.string().optional(),
 });

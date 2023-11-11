@@ -181,8 +181,35 @@ exports.searchNotesController = catchAsyncError(async (req, res, next) => {
   const search = await Notes.find({
     $or: [
       { title: { $regex: req.query.searchString, $options: "i" } },
-
       { tags: { $in: [req.query.searchString] } },
+    ],
+  });
+
+  if (!search.length > 0)
+    return next(new ErrorHandler("Notes not found", statusCode.NOT_FOUND));
+
+  let finalNotesArray = search.map((e, i) => {
+    if (req.user.savedNotes.includes(e._doc._id)) {
+      return { ...e._doc, bookmarked: true };
+    } else {
+      return { ...e._doc, bookmarked: false };
+    }
+  });
+
+  res.status(statusCode.SUCCESS).json({
+    success: true,
+    notes: finalNotesArray,
+  });
+});
+
+exports.getNotesBasedOnGraduation = catchAsyncError(async (req, res, next) => {
+  const { graduationYear, graduationSemester, course, branch } = req.query;
+  const search = await Notes.find({
+    $or: [
+      { graduationYear: graduationYear },
+      { graduationSemester: graduationSemester },
+      { course: { $regex: course, $options: "i" } },
+      { branch: { $regex: branch, $options: "i" } },
     ],
   });
 

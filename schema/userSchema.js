@@ -16,27 +16,17 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 20,
     },
-    dob: {
-      type: Date,
-      trim: true,
-    },
     address: {
       type: String,
     },
     collegeName: {
       type: String,
     },
-    addressLocation: {
-      lantitude: Number,
-      longitude: Number,
-    },
     currentLocation: {
       lantitude: Number,
       longitude: Number,
     },
-    enrollmentNo: {
-      type: String,
-    },
+
     graduationYear: {
       type: Number,
     },
@@ -55,13 +45,7 @@ const userSchema = new mongoose.Schema(
       minlength: [10, "Should not be less than 10 number."],
     },
     avatar: {
-      format: String,
-      original_filename: String,
-      folder: {
-        type: String,
-        default: "readreuse",
-      },
-      location: String,
+      type: String,
     },
     createdAt: {
       type: Date,

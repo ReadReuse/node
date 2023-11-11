@@ -12,6 +12,7 @@ const {
   verifyNotes,
   getUnverifiedNotesList,
   deleteNoteByAdmin,
+  noteBasedOnGraduationContract,
   bookmarkNote,
   searchNotesController,
 } = require("../controller/notesController");
@@ -41,6 +42,13 @@ notesRoute.get(
   "/search",
   isAuthenticatedUser,
   validate("query", searchQueryContract),
+  searchNotesController
+);
+
+notesRoute.get(
+  "/getNoteBasedOnGraduation",
+  isAuthenticatedUser,
+  validate("query", noteBasedOnGraduationContract),
   searchNotesController
 );
 

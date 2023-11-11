@@ -48,6 +48,18 @@ const notesSchema = mongoose.Schema(
         location: String,
       },
     ],
+    graduationYear: {
+      type: Number,
+    },
+    graduationSemester: {
+      type: Number,
+    },
+    course: {
+      type: String,
+    },
+    branch: {
+      type: String,
+    },
     createdAt: {
       type: Date,
       default: Date.now(),

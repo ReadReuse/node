@@ -4,6 +4,8 @@ const {
   updateNotesContract,
 } = require("../contracts/notes");
 const { searchQueryContract } = require("../contracts/feeed");
+
+const { noteBasedOnGraduationContract } = require("../contracts/notes");
 const {
   createNotes,
   updateNotes,
@@ -12,9 +14,9 @@ const {
   verifyNotes,
   getUnverifiedNotesList,
   deleteNoteByAdmin,
-  noteBasedOnGraduationContract,
   bookmarkNote,
   searchNotesController,
+  getNotesBasedOnGraduation,
 } = require("../controller/notesController");
 const { isAuthenticatedUser, authorizeRole } = require("../middleware/auth");
 const { validate } = require("../middleware/validation");
@@ -49,7 +51,7 @@ notesRoute.get(
   "/getNoteBasedOnGraduation",
   isAuthenticatedUser,
   validate("query", noteBasedOnGraduationContract),
-  searchNotesController
+  getNotesBasedOnGraduation
 );
 
 // admin acccess routes

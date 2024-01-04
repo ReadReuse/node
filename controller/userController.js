@@ -37,7 +37,7 @@ exports.userLogin = catchAsyncError(async (req, res, next) => {
     user = new User({
       mobileNo: mobile,
       otp: otpObject,
-    }).select("-otp");
+    });
     await user.save();
   } else {
     user = await User.findOneAndUpdate(

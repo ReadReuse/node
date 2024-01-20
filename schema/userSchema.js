@@ -83,10 +83,10 @@ const userSchema = new mongoose.Schema(
         ref: "Notes",
       },
     ],
-    savedFeed: [
+    savedQuestionPaper: [
       {
         type: mongoose.Schema.ObjectId,
-        ref: "Feed",
+        ref: "QuestionPaper",
       },
     ],
   },

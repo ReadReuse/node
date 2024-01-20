@@ -65,3 +65,7 @@ exports.noteBasedOnGraduationContract = Joi.object({
   course: Joi.string().optional(),
   branch: Joi.string().optional(),
 });
+
+exports.searchQueryContract = Joi.object({
+  searchString: Joi.string().required(),
+});

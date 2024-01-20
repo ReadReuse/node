@@ -3,6 +3,7 @@ const {
   loginContract,
   otpVerifyContract,
   userRegisterContract,
+  feedBackContract,
 } = require("../contracts/user");
 const userRoutes = Router();
 const {
@@ -16,9 +17,9 @@ const {
   getUserList,
   getUserDetails,
   searchUser,
-  savedFeedsData,
   savedNotesData,
-  getUserDataCount,
+  savedFeedBack,
+  getAllFeedBack,
 } = require("../controller/userController");
 const { validate } = require("../middleware/validation");
 const { isAuthenticatedUser, authorizeRole } = require("../middleware/auth");
@@ -39,11 +40,13 @@ userRoutes.post(
   updateCurrentLocation
 );
 
-userRoutes.get("/savedFeedByUser", isAuthenticatedUser, savedFeedsData);
-
 userRoutes.get("/savedNotesByUser", isAuthenticatedUser, savedNotesData);
-
-userRoutes.get("/getUserDataCount", isAuthenticatedUser, getUserDataCount);
+userRoutes.post(
+  "/saveFeedback",
+  validate("body", feedBackContract),
+  isAuthenticatedUser,
+  savedFeedBack
+);
 
 // admin routes
 
@@ -59,6 +62,13 @@ userRoutes.get(
   isAuthenticatedUser,
   authorizeRole("ADMIN"),
   getUserList
+);
+
+userRoutes.get(
+  "/getAllFeedBack",
+  isAuthenticatedUser,
+  authorizeRole("ADMIN"),
+  getAllFeedBack
 );
 
 userRoutes.get(

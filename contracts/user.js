@@ -32,3 +32,7 @@ exports.userRegisterContract = Joi.object({
   locality: Joi.string().optional(),
   state: Joi.string().optional(),
 });
+
+exports.feedBackContract = Joi.object({
+  feedBack: Joi.string().required(),
+});

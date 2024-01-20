@@ -6,11 +6,11 @@ const {
   consumeOtp,
 } = require("../utils/userUtils");
 const User = require("../schema/userSchema");
-const Feed = require("../schema/feedSchema");
 const Notes = require("../schema/notesSchema");
-const Feeds = require("../schema/feedSchema");
+
 const { getJWTtoken } = require("../utils/jwt");
 const statusCode = require("../constant/statusCode");
+const FeedBack = require("../schema/feedbackSchema");
 
 exports.userLogin = catchAsyncError(async (req, res, next) => {
   const { mobile } = req.body;
@@ -190,13 +190,11 @@ exports.getUserDetailFromToken = catchAsyncError(async (req, res, next) => {
 
 exports.getAllDetailsCount = catchAsyncError(async (req, res, next) => {
   const users = await User.count();
-  const feeds = await Feeds.count();
   const notes = await Notes.count();
 
   res.status(statusCode.SUCCESS).json({
     success: true,
     users,
-    feeds,
     notes,
   });
 });
@@ -214,7 +212,7 @@ exports.getUserList = catchAsyncError(async (req, res, next) => {
 
 exports.getUserDetails = catchAsyncError(async (req, res, next) => {
   const user = await User.findById(req.params.userId).select(
-    "-otp  -currentLocation -savedFeed -savedNotes"
+    "-otp  -currentLocation -savedNotes"
   );
 
   if (!user)
@@ -244,30 +242,6 @@ exports.searchUser = catchAsyncError(async (req, res, next) => {
   });
 });
 
-exports.savedFeedsData = catchAsyncError(async (req, res, next) => {
-  const feeds = await Feed.find({
-    _id: { $in: req.user.savedFeed },
-    blocked: false,
-    soldOut: false,
-  }).populate("user", "name avatar mobileNo");
-
-  if (!feeds.length > 0) {
-    return next(new ErrorHandler("No feed is saved"));
-  }
-
-  let finalFeedsArray = feeds.map((e, i) => {
-    if (req.user.savedFeed.includes(e._doc._id)) {
-      return { ...e._doc, bookmarked: true };
-    } else {
-      return { ...e._doc, bookmarked: false };
-    }
-  });
-  res.status(statusCode.SUCCESS).json({
-    success: true,
-    feeds: finalFeedsArray,
-  });
-});
-
 exports.savedNotesData = catchAsyncError(async (req, res, next) => {
   const notes = await Notes.find({ _id: { $in: req.user.savedNotes } });
 
@@ -289,19 +263,25 @@ exports.savedNotesData = catchAsyncError(async (req, res, next) => {
   });
 });
 
-exports.getUserDataCount = catchAsyncError(async (req, res, next) => {
-  const activeFeedCount = await Feed.find({
-    user: req.user._id,
-    blocked: false,
-  }).count();
-  const blockFeedCount = await Feed.find({
-    user: req.user._id,
-    blocked: true,
-  }).count();
+exports.savedFeedBack = catchAsyncError(async (req, res, next) => {
+  const userId = req.user._id;
+
+  const feedback = await FeedBack.create({
+    feedback: req.body.feedBack,
+    userId,
+  });
 
   res.status(statusCode.SUCCESS).json({
     success: true,
-    activeFeedCount,
-    blockFeedCount,
+    message: "Feedback saved successfully.",
+  });
+});
+
+exports.getAllFeedBack = catchAsyncError(async (req, res, next) => {
+  const feedback = await FeedBack.find({}).sort({ createdAt: -1 });
+
+  res.status(statusCode.SUCCESS).json({
+    success: true,
+    data: feedback,
   });
 });

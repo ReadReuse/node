@@ -1,88 +1,58 @@
 const { Router } = require("express");
-const {
-  createNotesContract,
-  updateNotesContract,
-} = require("../contracts/notes");
 
 const {
-  noteBasedOnGraduationContract,
-  searchQueryContract,
-} = require("../contracts/notes");
-const {
-  createNotes,
-  updateNotes,
-  listAllNotes,
-  blockNotes,
-  verifyNotes,
-  getUnverifiedNotesList,
-  deleteNoteByAdmin,
-  bookmarkNote,
-  searchNotesController,
-  getNotesBasedOnGraduation,
-} = require("../controller/notesController");
+  createQuestionPaper,
+  updateQuestionPaper,
+  listAllQuestionPaper,
+  searchQuestionPaperController,
+  getQuestionPaperBasedOnGraduation,
+  deleteQuestionPaperByAdmin,
+} = require("../controller/questionPaperController");
 const { isAuthenticatedUser, authorizeRole } = require("../middleware/auth");
 const { validate } = require("../middleware/validation");
-const notesRoute = Router();
+const {
+  createQuestionPaperContract,
+  updateQuestionPaperContract,
+  searchQueryContract,
+  QuestionPaperBasedOnGraduationContract,
+} = require("../contracts/questionPaper");
+const questionPaperRoute = Router();
 
-notesRoute.post(
+questionPaperRoute.post(
   "/",
   isAuthenticatedUser,
-  validate("body", createNotesContract),
-  createNotes
+  validate("body", createQuestionPaperContract),
+  createQuestionPaper
 );
 
-notesRoute.put(
-  "/:noteId",
+questionPaperRoute.put(
+  "/:questionPaperId",
   isAuthenticatedUser,
-  validate("body", updateNotesContract),
-  updateNotes
+  validate("body", updateQuestionPaperContract),
+  updateQuestionPaper
 );
 
-notesRoute.get("/", isAuthenticatedUser, listAllNotes);
+questionPaperRoute.get("/", isAuthenticatedUser, listAllQuestionPaper);
 
-notesRoute.get("/bookmark/:noteId", isAuthenticatedUser, bookmarkNote);
-
-notesRoute.get(
+questionPaperRoute.get(
   "/search",
   isAuthenticatedUser,
   validate("query", searchQueryContract),
-  searchNotesController
+  searchQuestionPaperController
 );
 
-notesRoute.get(
+questionPaperRoute.get(
   "/getNoteBasedOnGraduation",
   isAuthenticatedUser,
-  validate("query", noteBasedOnGraduationContract),
-  getNotesBasedOnGraduation
+  validate("query", QuestionPaperBasedOnGraduationContract),
+  getQuestionPaperBasedOnGraduation
 );
 
-// admin acccess routes
-notesRoute.get(
-  "/block/:noteId",
+questionPaperRoute.delete(
+  "/noteDelete/:questionPaperId",
   isAuthenticatedUser,
   authorizeRole("ADMIN"),
-  blockNotes
+  deleteQuestionPaperByAdmin
 );
 
-notesRoute.post(
-  "/verify/:noteId",
-  isAuthenticatedUser,
-  authorizeRole("ADMIN"),
-  verifyNotes
-);
-
-notesRoute.get(
-  "/unverifiedList",
-  isAuthenticatedUser,
-  authorizeRole("ADMIN"),
-  getUnverifiedNotesList
-);
-
-notesRoute.delete(
-  "/noteDelete/:noteId",
-  isAuthenticatedUser,
-  authorizeRole("ADMIN"),
-  deleteNoteByAdmin
-);
-
-module.exports = notesRoute;
+module.exports = questionPaperRoute;

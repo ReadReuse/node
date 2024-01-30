@@ -46,17 +46,17 @@ const QuestionPaperSchema = new mongoose.Schema(
     //       },
     //     },
     //   ],
-    thumbnailImages: [
-      {
-        format: String,
-        original_filename: String,
-        folder: {
-          type: String,
-          default: "readreuse",
-        },
-        location: String,
-      },
-    ],
+    // thumbnailImages: [
+    //   {
+    //     format: String,
+    //     original_filename: String,
+    //     folder: {
+    //       type: String,
+    //       default: "readreuse",
+    //     },
+    //     location: String,
+    //   },
+    // ],
     graduationYear: {
       type: Number,
     },

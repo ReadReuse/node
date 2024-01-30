@@ -17,16 +17,16 @@ exports.createNotesContract = Joi.object({
   graduationSemester: Joi.string().required(),
   course: Joi.string().required(),
   branch: Joi.string().required(),
-  thumbnailImages: Joi.array()
-    .items(
-      Joi.object({
-        format: Joi.string().required(),
-        original_filename: Joi.string().required(),
-        folder: Joi.string().optional(),
-        location: Joi.string().required(),
-      })
-    )
-    .required(),
+  // thumbnailImages: Joi.array()
+  //   .items(
+  //     Joi.object({
+  //       format: Joi.string().required(),
+  //       original_filename: Joi.string().required(),
+  //       folder: Joi.string().optional(),
+  //       location: Joi.string().required(),
+  //     })
+  //   )
+  //   .required(),
 });
 
 exports.updateNotesContract = Joi.object({

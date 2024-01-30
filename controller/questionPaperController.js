@@ -123,7 +123,7 @@ exports.getQuestionPaperBasedOnGraduation = catchAsyncError(
   async (req, res, next) => {
     const { graduationYear, graduationSemester, course, branch } = req.query;
     const search = await QuestionPaper.find({
-      $or: [
+      $and: [
         { graduationYear: graduationYear },
         { graduationSemester: graduationSemester },
         { course: { $regex: course, $options: "i" } },

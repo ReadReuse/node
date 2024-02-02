@@ -75,7 +75,7 @@ exports.listAllQuestionPaper = catchAsyncError(async (req, res, next) => {
 
 // delete questionPaper by admin
 exports.deleteQuestionPaperByAdmin = catchAsyncError(async (req, res, next) => {
-  const deletedQuestionPaper = await QuestionPaper.fidndByIdAndDelete(
+  const deletedQuestionPaper = await QuestionPaper.findByIdAndDelete(
     req.params.questionPaperId
   );
 

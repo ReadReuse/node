@@ -49,7 +49,7 @@ questionPaperRoute.get(
 );
 
 questionPaperRoute.delete(
-  "/noteDelete/:questionPaperId",
+  "/paperDelete/:questionPaperId",
   isAuthenticatedUser,
   authorizeRole("ADMIN"),
   deleteQuestionPaperByAdmin

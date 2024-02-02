@@ -129,7 +129,7 @@ exports.getQuestionPaperBasedOnGraduation = catchAsyncError(
         { course: { $regex: course, $options: "i" } },
         { branch: { $regex: branch, $options: "i" } },
       ],
-    });
+    }).select("-paperData");
 
     if (!search.length > 0)
       return next(

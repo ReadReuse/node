@@ -205,7 +205,7 @@ exports.searchNotesController = catchAsyncError(async (req, res, next) => {
 exports.getNotesBasedOnGraduation = catchAsyncError(async (req, res, next) => {
   const { graduationYear, graduationSemester, course, branch } = req.query;
   const search = await Notes.find({
-    $or: [
+    $and: [
       { graduationYear: graduationYear },
       { graduationSemester: graduationSemester },
       { course: { $regex: course, $options: "i" } },

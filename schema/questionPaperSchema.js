@@ -16,15 +16,21 @@ const QuestionPaperSchema = new mongoose.Schema(
       ref: "Users",
       required: true,
     },
-    pdfData: {
-      format: String,
-      original_filename: String,
-      folder: {
-        type: String,
-        default: "readreuse",
+    paperData: [
+      {
+        subjectCode: String,
+        paperYear: String,
+        pdfData: {
+          format: String,
+          original_filename: String,
+          folder: {
+            type: String,
+            default: "readreuse",
+          },
+          location: String,
+        },
       },
-      location: String,
-    },
+    ],
     //   unitsData: [
     //     {
     //       unitTitle: {

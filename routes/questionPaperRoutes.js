@@ -42,7 +42,7 @@ questionPaperRoute.get(
 );
 
 questionPaperRoute.get(
-  "/getNoteBasedOnGraduation",
+  "/getPaperBasedOnGraduation",
   isAuthenticatedUser,
   validate("query", QuestionPaperBasedOnGraduationContract),
   getQuestionPaperBasedOnGraduation

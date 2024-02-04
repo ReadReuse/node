@@ -46,9 +46,7 @@ exports.updateNotes = catchAsyncError(async (req, res, next) => {
 });
 
 exports.listAllNotes = catchAsyncError(async (req, res, next) => {
-  const notes = await Notes.find({ blocked: false, verified: true })
-    .sort({ _id: -1 })
-    .limit(req.query.limit || 20);
+  const notes = await Notes.find({}).sort({ _id: -1 });
 
   let finalNotesArray = notes.map((e, i) => {
     if (req.user.savedNotes.includes(e._doc._id)) {

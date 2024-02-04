@@ -150,3 +150,22 @@ exports.getQuestionPaperBasedOnGraduation = catchAsyncError(
     });
   }
 );
+
+exports.getSpecificPaperData = catchAsyncError(async (req, res, next) => {
+  const questionPaperId = req.params.questionPaperId;
+
+  let questionPaper = await QuestionPaper.find({
+    _id: questionPaperId,
+  });
+
+  if (!questionPaper.length > 0)
+    return next(
+      new ErrorHandler("Question Paper not found", statusCode.NOT_FOUND)
+    );
+
+  res.status(statusCode.SUCCESS).json({
+    success: true,
+    message: "Question Paper fetched successfully",
+    questionPaper,
+  });
+});

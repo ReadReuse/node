@@ -7,6 +7,7 @@ const {
   searchQuestionPaperController,
   getQuestionPaperBasedOnGraduation,
   deleteQuestionPaperByAdmin,
+  getSpecificPaperData,
 } = require("../controller/questionPaperController");
 const { isAuthenticatedUser, authorizeRole } = require("../middleware/auth");
 const { validate } = require("../middleware/validation");
@@ -46,6 +47,12 @@ questionPaperRoute.get(
   isAuthenticatedUser,
   validate("query", QuestionPaperBasedOnGraduationContract),
   getQuestionPaperBasedOnGraduation
+);
+
+questionPaperRoute.get(
+  "/:questionPaperId",
+  isAuthenticatedUser,
+  getSpecificPaperData
 );
 
 questionPaperRoute.delete(

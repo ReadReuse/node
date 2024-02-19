@@ -278,7 +278,11 @@ exports.savedFeedBack = catchAsyncError(async (req, res, next) => {
 });
 
 exports.getAllFeedBack = catchAsyncError(async (req, res, next) => {
-  const feedback = await FeedBack.find({}).sort({ createdAt: -1 });
+  const feedback = await FeedBack.find({}).sort({ createdAt: -1 }).populate({
+    path: "userId",
+    select:
+      "name course branch graduationSemester graduationYear address collegeName mobileNo email",
+  });
 
   res.status(statusCode.SUCCESS).json({
     success: true,

@@ -22,16 +22,20 @@ exports.userLogin = catchAsyncError(async (req, res, next) => {
 
   const otpValue = generateOtp();
 
-  const otpObject = {
-    expiry: new Date(
-      new Date().getTime() + 1000 * 60 * process.env.OTP_EXPIRY_TIME
-    ),
-    value: otpValue,
-    consumed: false,
-  };
-
   user = await User.findOne({ mobileNo: mobile });
 
+  const otpObject =
+    user &&
+    user.otp.expiry.getTime() - new Date().getTime() > 0 &&
+    !user.otp.consumed
+      ? user.otp
+      : {
+          expiry: new Date(
+            new Date().getTime() + 1000 * 60 * process.env.OTP_EXPIRY_TIME
+          ),
+          value: otpValue,
+          consumed: false,
+        };
   if (!user) {
     // user = await User.insert/
     user = new User({
@@ -46,7 +50,7 @@ exports.userLogin = catchAsyncError(async (req, res, next) => {
     ).select("-otp");
   }
 
-  if (mobile !== "9926488445") await sendMobileSms(otpValue, mobile);
+  if (mobile !== "9926488445") await sendMobileSms(otpObject.value, mobile);
 
   res.status(statusCode.SUCCESS).json({
     success: true,

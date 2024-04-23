@@ -46,7 +46,23 @@ exports.updateNotes = catchAsyncError(async (req, res, next) => {
 });
 
 exports.listAllNotes = catchAsyncError(async (req, res, next) => {
-  const notes = await Notes.find({}).sort({ _id: -1 });
+  const { graduationYear, graduationSemester, course, branch } = req.query;
+  let notes;
+  if (graduationSemester && graduationYear && course && branch) {
+    notes = await Notes.find({
+      $and: [
+        { graduationYear: graduationYear },
+        { graduationSemester: graduationSemester },
+        { course: { $regex: course, $options: "i" } },
+        { branch: { $regex: branch, $options: "i" } },
+      ],
+    });
+  } else {
+    notes = await Notes.find({}).sort({ _id: -1 });
+  }
+
+  // if (!notes.length > 0)
+  //   return next(new ErrorHandler("Notes not found", statusCode.NOT_FOUND));
 
   let finalNotesArray = notes.map((e, i) => {
     if (req.user.savedNotes.includes(e._doc._id)) {
@@ -56,7 +72,6 @@ exports.listAllNotes = catchAsyncError(async (req, res, next) => {
     }
   });
 
-  console.log(finalNotesArray);
   res.status(statusCode.SUCCESS).json({
     success: true,
     notes: finalNotesArray,

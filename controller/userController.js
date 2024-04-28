@@ -99,10 +99,10 @@ exports.verifyOtp = catchAsyncError(async (req, res, next) => {
 exports.registerUserDetails = catchAsyncError(async (req, res, next) => {
   const userId = req.params.userId;
 
-  let user = await User.find({ _id: userId });
+  let user = await User.findOne({ _id: userId });
 
   if (!user)
-    return next(new ErrorHandler("User not exist.", statusCode.BAD_REQUEST));
+    return next(new ErrorHandler("User not exist.", statusCode.NOT_FOUND));
   if (!user[0].otp.consumed)
     return next(
       new ErrorHandler("Otp is not verified", statusCode.BAD_REQUEST)

@@ -124,7 +124,7 @@ exports.registerUserDetails = catchAsyncError(async (req, res, next) => {
     new: true,
     runValidators: true,
   }).select("-otp");
-
+  console.log("updatedUser", updatedUser);
   res.status(statusCode.SUCCESS).json({
     success: true,
     message: "User updated successfully.",

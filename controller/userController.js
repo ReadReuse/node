@@ -101,12 +101,16 @@ exports.registerUserDetails = catchAsyncError(async (req, res, next) => {
 
   let user = await User.findOne({ _id: userId });
 
-  if (!user)
+  if (!user) {
+    console.log(statusCode.NOT_FOUND, "user not found wrror", user);
     return next(new ErrorHandler("User not exist.", statusCode.NOT_FOUND));
-  if (!user[0].otp.consumed)
+  }
+  if (!user[0].otp.consumed) {
+    console.log(statusCode.BAD_REQUEST, "Otp is not verified", user);
     return next(
       new ErrorHandler("Otp is not verified", statusCode.BAD_REQUEST)
     );
+  }
 
   let payload = {
     ...req.body,

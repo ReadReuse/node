@@ -18,7 +18,7 @@ exports.userRegisterContract = Joi.object({
   email: Joi.string()
     .email({ tlds: { allow: false } })
     .required(),
-  address: Joi.string().required(),
+  address: Joi.string().optional(),
   collegeName: Joi.string().required(),
   currentLocation: Joi.object({
     lantitude: Joi.number(),

@@ -15,9 +15,7 @@ exports.otpVerifyContract = Joi.object({
 exports.userRegisterContract = Joi.object({
   avatar: Joi.string(),
   name: Joi.string().required(),
-  email: Joi.string()
-    .email({ tlds: { allow: false } })
-    .required(),
+  email: Joi.string().required(),
   address: Joi.string().optional(),
   collegeName: Joi.string().required(),
   currentLocation: Joi.object({
